@@ -1,0 +1,41 @@
+/*
+  ==============================================================================
+
+    This file contains the basic framework code for a JUCE plugin editor.
+
+  ==============================================================================
+*/
+
+#pragma once
+
+#include <JuceHeader.h>
+#include "PluginProcessor.h"
+
+#include "SerumLookAndFeel.h"
+#include "ControlKnob.h"
+#include "Oscillator.h"
+
+//==============================================================================
+/**
+*/
+class SerumAudioProcessorEditor  : public juce::AudioProcessorEditor
+{
+public:
+    SerumAudioProcessorEditor (SerumAudioProcessor&);
+    ~SerumAudioProcessorEditor() override;
+
+    //==============================================================================
+    void paint (juce::Graphics&) override;
+    void resized() override;
+
+private:
+    // This reference is provided as a quick way for your editor to
+    // access the processor object that created it.
+    SerumAudioProcessor& audioProcessor;
+
+    SerumLookAndFeel serumLookAndFeel;
+
+   Oscillator osc1;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SerumAudioProcessorEditor)
+};
