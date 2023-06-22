@@ -12,7 +12,6 @@
 #include "PluginProcessor.h"
 
 #include "SerumLookAndFeel.h"
-#include "ControlKnob.h"
 #include "Oscillator.h"
 
 //==============================================================================

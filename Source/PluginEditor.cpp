@@ -17,7 +17,7 @@ SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p)
     setSize (540, 620);
     setResizable (true, true);
 
-   addAndMakeVisible (osc1);
+    addAndMakeVisible (osc1);
 }
 
 SerumAudioProcessorEditor::~SerumAudioProcessorEditor()

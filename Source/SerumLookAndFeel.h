@@ -12,26 +12,33 @@
 
 #include <JuceHeader.h>
 
-#include "AdvancedLabel.h"
-
 class SerumLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
-    juce::Colour grey1 = {133, 146, 154};
-    juce::Colour grey2 = {99, 108, 114};
-    juce::Colour grey3 = {50, 55, 60};
-    juce::Colour grey4 = {35, 40, 42};
+    enum SerumColours
+    {
+        SerumGrey1,
+        SerumGrey2,
+        SerumGrey3,
+        SerumGrey4,
+        SerumGrey5,
 
-    juce::Colour serumBlue = {2,145,197};
+        SerumBlue1,
+        SerumBlue2,
+        SerumBlue3,
 
-    float roundedRectangleFactor1 = 10.0f;
-    float troundedRectangleFactor2 = 30.0f;
+        SerumGreen1,
+        SerumGreen2,
+
+        SerumRed1
+    };
+
+    float roundedRectangleFactor1 = 3.0f;
+    float roundedRectangleFactor2 = 30.0f;
 
     SerumLookAndFeel ();
-    
+
     void drawLabel (juce::Graphics& g, juce::Label& label) override;
-    void drawBasicLabel (juce::Graphics& g, juce::Label& label);
-    void drawAdvancedLabel (juce::Graphics& g, AdvancedLabel& label);
 
     void drawButtonBackground (juce::Graphics& g, juce::Button& button, 
                     const juce::Colour& backgroundColour, 

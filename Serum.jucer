@@ -9,23 +9,8 @@
             file="../../../Downloads/seravek (1)/Seravek Basic/Seravek Basic.ttf"/>
     </GROUP>
     <GROUP id="{D07D45AE-6E0C-21A6-64B4-64929030375C}" name="Source">
-      <FILE id="WHp7F5" name="AdvancedFlexBox.cpp" compile="1" resource="0"
-            file="Source/AdvancedFlexBox.cpp"/>
-      <FILE id="upPhck" name="AdvancedFlexBox.h" compile="0" resource="0"
-            file="Source/AdvancedFlexBox.h"/>
-      <FILE id="RLdsiT" name="WtComponent.cpp" compile="1" resource="0" file="Source/WtComponent.cpp"/>
-      <FILE id="kmmbZF" name="WtComponent.h" compile="0" resource="0" file="Source/WtComponent.h"/>
       <FILE id="Y34j9p" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
       <FILE id="tuAbqS" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
-      <FILE id="kDSOyZ" name="AdvancedLabel.cpp" compile="1" resource="0"
-            file="Source/AdvancedLabel.cpp"/>
-      <FILE id="fS3oUN" name="AdvancedLabel.h" compile="0" resource="0" file="Source/AdvancedLabel.h"/>
-      <FILE id="fCsjWg" name="AdvancedSlider.cpp" compile="1" resource="0"
-            file="Source/AdvancedSlider.cpp"/>
-      <FILE id="OPKKOu" name="AdvancedSlider.h" compile="0" resource="0"
-            file="Source/AdvancedSlider.h"/>
-      <FILE id="vi4ttW" name="ControlKnob.cpp" compile="1" resource="0" file="Source/ControlKnob.cpp"/>
-      <FILE id="bHoYAy" name="ControlKnob.h" compile="0" resource="0" file="Source/ControlKnob.h"/>
       <FILE id="wLGG0D" name="SerumLookAndFeel.cpp" compile="1" resource="0"
             file="Source/SerumLookAndFeel.cpp"/>
       <FILE id="Xc7Acb" name="SerumLookAndFeel.h" compile="0" resource="0"

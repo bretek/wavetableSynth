@@ -12,75 +12,63 @@
 
 SerumLookAndFeel::SerumLookAndFeel ()
 {
-    setColour (juce::ResizableWindow::backgroundColourId, grey1);
+    setColour (SerumGrey1, juce::Colour (137, 148, 154));
+    setColour (SerumGrey2, juce::Colour (99, 108, 114));
+    setColour (SerumGrey3, juce::Colour (66, 72, 76));
+    setColour (SerumGrey4, juce::Colour (50, 55, 60));
+    setColour (SerumGrey5, juce::Colour (37, 41, 45));
+
+    setColour (SerumBlue1, juce::Colour (194, 238, 255));
+    setColour (SerumBlue2, juce::Colour (108, 170, 235));
+    setColour (SerumBlue3, juce::Colour (6, 131, 195));
+
+    setColour (SerumGreen1, juce::Colour (134, 248, 1));
+    setColour (SerumGreen2, juce::Colour (41, 66, 16));
+
+    setColour (SerumRed1, juce::Colour (64, 44, 43));
+
+    setColour (juce::ResizableWindow::backgroundColourId, findColour (SerumGrey1));
 }
 
 void SerumLookAndFeel::drawLabel (juce::Graphics& g, juce::Label& label)
 {
-    AdvancedLabel* advancedLabel = dynamic_cast<AdvancedLabel*> (&label);
-    if (advancedLabel != NULL)
-    {
-        drawAdvancedLabel (g, *advancedLabel);
-    }
-    else
-    {
-        drawBasicLabel (g, label);
-    }
-}
-
-void SerumLookAndFeel::drawBasicLabel (juce::Graphics& g, juce::Label& label)
-{
-    const auto roundingFactor = label.getHeight() * 0.15f;
-    g.setColour (grey2);
-    g.fillRoundedRectangle (0, 0, label.getWidth(), label.getHeight(), roundingFactor);
-
-    g.setColour (juce::Colours::white);
+    g.setColour (label.findColour (juce::Label::ColourIds::textColourId));
     g.setFont (getCustomFont().withHeight (label.getHeight()));
-    g.drawFittedText (label.getText(), 0, 0, label.getWidth(), label.getHeight(), juce::Justification::centred, 1);
-}
-
-void SerumLookAndFeel::drawAdvancedLabel (juce::Graphics& g, AdvancedLabel& label)
-{
-    const auto roundingFactor = label.getHeight() * 0.15f;
-    g.setColour (grey2);
-    g.fillRoundedRectangle (0, 0, label.getWidth(), label.getHeight(), roundingFactor);
-    if (label.closedLeft)
-    {
-        g.fillRect (0, 0, label.getWidth()/2, label.getHeight());
-    }
-    if (label.closedRight)
-    {
-        g.fillRect (ceil(label.getWidth()/2), 0, ceil(label.getWidth()/2)+1, label.getHeight());
-    }
-
-    g.setColour (juce::Colours::white);
-    g.setFont (getCustomFont().withHeight (label.getHeight()));
-    g.drawFittedText (label.getText(), 0, 0, label.getWidth(), label.getHeight(), label.justification, 1);
+    g.drawFittedText (label.getText(), 0, 0, label.getWidth(), label.getHeight(), label.getJustificationType(), 1);
 }
 
 void SerumLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, 
                     const juce::Colour& backgroundColour, 
                     bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
-    const auto roundingFactor = button.getHeight() * 0.05f;
-    g.setColour (grey3);
-    g.fillRoundedRectangle (0, 0, button.getWidth(), button.getHeight(), roundingFactor);
+    g.setColour (findColour (SerumGrey5));
+    g.fillRoundedRectangle (0, 0, button.getWidth(), button.getHeight(), roundedRectangleFactor1);
 }
 
 void SerumLookAndFeel::drawToggleButton (juce::Graphics& g, juce::ToggleButton& button, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
+    const auto size = juce::jmin (button.getWidth(), button.getHeight());
+    juce::ColourGradient buttonGradient;
+
     if (button.getToggleState())
     {
-        g.setColour (serumBlue);
+        buttonGradient = juce::ColourGradient (findColour (SerumBlue3), 
+                                                button.getWidth()/2, button.getHeight()/2,
+                                                findColour (SerumBlue1),
+                                                button.getWidth()/2, button.getHeight()/2 + size,
+                                                true);
     }
     else
     {
-        g.setColour (grey3);
+        buttonGradient = juce::ColourGradient (findColour (SerumGrey5), 
+                                                button.getWidth()/2, button.getHeight()/2,
+                                                findColour (SerumGrey4),
+                                                button.getWidth()/2, button.getHeight()/2 + size,
+                                                true);
     }
 
-    const auto size = juce::jmin (button.getWidth(), button.getHeight());
-
-    g.fillRect ((button.getWidth() - size) / 2, (button.getHeight() - size) / 2, size, size);
+    g.setGradientFill (buttonGradient);
+    g.fillRoundedRectangle ((button.getWidth() - size) / 2, (button.getHeight() - size) / 2, size, size, roundedRectangleFactor1);
 }
 
 const juce::Font SerumLookAndFeel::getCustomFont()
@@ -113,15 +101,15 @@ void SerumRotarySliderDial::drawRotarySlider (juce::Graphics& g, int x, int y, i
                     diameter, diameter - markerRadius*2, 
                     centerX, centerY, 
                     rotaryStartAngle, rotaryEndAngle,
-                    juce::Colour(192,211,226));
+                    findColour (SerumGrey2));   //juce::Colour(192,211,226));
 
     // draw outer ring
     drawRing (g, 
               diameter - markerRadius*2 - gap1, diameter - markerRadius*2 - gap1 - outerRingWidth, 
               centerX, centerY, 
               rotaryStartAngle, rotaryEndAngle, 
-              juce::ColourGradient (juce::Colour (151,171,188), juce::Point<float> (0,0), 
-                                    juce::Colour (151,171,188), juce::Point<float> (0,0), 
+              juce::ColourGradient (findColour (SerumGrey2), juce::Point<float> (0,0),  //juce::Colour (151,171,188)
+                                    findColour (SerumGrey2), juce::Point<float> (0,0),   //juce::Colour (151,171,188)
                                     false));
 
     // draw main knob shadow
@@ -136,10 +124,10 @@ void SerumRotarySliderDial::drawRotarySlider (juce::Graphics& g, int x, int y, i
 
     // draw main knob ridge
     auto ridgeOuterDiameter = shadowOuterDiameter - shadowWidth;
-    juce::ColourGradient ridgeColourGradient (juce::Colour (52,64,76), juce::Point<float> (centerX,centerY), 
-                                              juce::Colour (52,64,76), juce::Point<float> (centerX,centerY+ridgeOuterDiameter/2), 
+    juce::ColourGradient ridgeColourGradient (findColour (SerumGrey4), juce::Point<float> (centerX,centerY),   //juce::Colour (52,64,76)
+                                              findColour (SerumGrey4), juce::Point<float> (centerX,centerY+ridgeOuterDiameter/2), 
                                               true);
-    ridgeColourGradient.addColour (1.0 - ((ridgeWidth/2) / (ridgeOuterDiameter/2)), juce::Colour (88,106,124));
+    ridgeColourGradient.addColour (1.0 - ((ridgeWidth/2) / (ridgeOuterDiameter/2)), findColour (SerumGrey2));
 
     drawRing (g, 
               ridgeOuterDiameter, ridgeOuterDiameter - ridgeWidth, 
@@ -152,15 +140,15 @@ void SerumRotarySliderDial::drawRotarySlider (juce::Graphics& g, int x, int y, i
               ridgeOuterDiameter - ridgeWidth, 0, 
               centerX, centerY, 
               0, 2.5f*juce::MathConstants<float>::pi, 
-              juce::ColourGradient (juce::Colour (53,65,76), juce::Point<float> (0,centerY+(ridgeOuterDiameter - ridgeWidth)/2), 
-                                    juce::Colour (70,85,100), juce::Point<float> (0,centerY-(ridgeOuterDiameter - ridgeWidth)/2), false));
+              juce::ColourGradient (findColour (SerumGrey4), juce::Point<float> (0,centerY+(ridgeOuterDiameter - ridgeWidth)/2),   //juce::Colour (53,65,76)
+                                    findColour (SerumGrey3), juce::Point<float> (0,centerY-(ridgeOuterDiameter - ridgeWidth)/2), false));  //juce::Colour (70,85,100)
 
     // draw blue dial
     drawDial (g, 
               shadowOuterDiameter, ridgeOuterDiameter, 
               centerX, centerY,
               angle, dialWidth,
-              serumBlue);
+              findColour (SerumBlue3));
 
     // draw white dial
     drawDial (g, 
@@ -186,7 +174,7 @@ void SerumSliderBox::drawRotarySlider (juce::Graphics& g, int x, int y, int widt
         boxWidth *= height/boxHeight;
     }
 
-    const auto outlineLineWidth = width * 0.02f;
+    const auto outlineLineWidth = width * 0.03f;
     const auto roundingFactor = width * 0.00005f;
 
     const auto innerWidth = boxWidth - outlineLineWidth;
@@ -195,8 +183,8 @@ void SerumSliderBox::drawRotarySlider (juce::Graphics& g, int x, int y, int widt
     g.setColour (juce::Colours::black);
     g.drawRoundedRectangle ((width - boxWidth) / 2, (height - boxHeight) / 2, boxWidth, boxHeight, boxWidth * roundingFactor, outlineLineWidth);
 
-    juce::Colour backgroundColour (juce::Colours::grey);
-    juce::ColourGradient backgroundGradient (juce::Colour(33,67,48), juce::Point<float>(0,0), juce::Colour(64,44,43), juce::Point<float>(1,0), false);
+    juce::Colour backgroundColour (findColour (SerumGrey5));
+    juce::ColourGradient backgroundGradient (findColour (SerumGreen2), juce::Point<float>(0,0), findColour (SerumRed1), juce::Point<float>(1,0), false);
 
     if (slider.getValue() != slider.getMinimum())
     {
@@ -230,7 +218,7 @@ void SerumSliderBox::drawRotarySlider (juce::Graphics& g, int x, int y, int widt
     }
     else
     {
-        g.setColour (juce::Colours::lightgrey);
+        g.setColour (findColour (SerumGrey1));
     }
 
     juce::Path path;
@@ -255,35 +243,12 @@ void SerumSliderBox::drawRotarySlider (juce::Graphics& g, int x, int y, int widt
 void SerumSliderBox2::drawRotarySlider (juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
                            const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider& slider)
 {
-    const auto centerX = x + width/2;
-    const auto centerY = y + height/2;
-
-    // draw box
-    auto boxWidth = width * 0.85f;
-    auto boxHeight = boxWidth * 0.4f;
-
-    if (boxHeight > height)
-    {
-        boxHeight *= height/boxHeight;
-        boxWidth *= height/boxHeight;
-    }
-
-    g.setColour (grey4);
-    g.fillRect ((width - boxWidth) / 2, (height - boxHeight) / 2, boxWidth, boxHeight);
-
-    // draw label text
-    g.setColour (grey2);
-    g.setFont (getCustomFont().withHeight (boxHeight/3));
-    g.drawText ("OCT", 
-                (width - boxWidth) / 2, (height - boxHeight) / 2,
-                boxWidth/2, boxHeight, juce::Justification::centred);
-
     // draw value text
     g.setColour (juce::Colours::white);
-    g.setFont (getCustomFont().withHeight (boxHeight/2));
+    g.setFont (getCustomFont().withHeight (slider.getHeight()));
     g.drawText (juce::String(slider.getValue()), 
-                centerX, (height - boxHeight) / 2,
-                boxWidth/2, boxHeight, juce::Justification::centred);
+                0, 0,
+                slider.getWidth(), slider.getHeight(), juce::Justification::centred);
 }
 
 // Drawing helpers
