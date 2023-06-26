@@ -13,7 +13,15 @@
 void WavetableSynth::prepareToPlay (double sampleRate)
 {
     this->sampleRate = sampleRate;
-    oscillator.sampleRate = sampleRate;
+
+    for (int i = 0; i < 3; ++i)
+    {
+        oscillators.emplace_back ();
+    }
+
+    oscillators[0].sampleRate = sampleRate;
+    oscillators[1].sampleRate = sampleRate;
+    oscillators[2].sampleRate = sampleRate;
 }
 
 void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -44,11 +52,13 @@ void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSam
 {
     auto channel = buffer.getWritePointer (0);
     
-    if (oscillator.isPlaying())
+    if (oscillators[0].isPlaying())
     {
         for (auto sample = startSample; sample <= endSample; ++sample)
         {
-            channel[sample] += oscillator.getSample();
+            channel[sample] += oscillators[0].getSample();
+            channel[sample] += oscillators[1].getSample();
+            channel[sample] += oscillators[2].getSample();
         }
     }
 }
@@ -57,17 +67,14 @@ void WavetableSynth::handleMidi (juce::MidiMessage& message)
 {
     if (message.isNoteOn())
     {
-        oscillator.setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()));
+        oscillators[0].setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()) - 20.f);
+        oscillators[1].setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()));
+        oscillators[2].setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()) + 20.f);
     }
     else if (message.isNoteOff())
     {
-        oscillator.stop();
+        oscillators[0].stop();
+        oscillators[1].stop();
+        oscillators[2].stop();
     }
-}
-
-void WavetableSynth::setUnison (int unison)
-{
-    this->unison = unison;
-    blendAmp = 1.f / static_cast<float>(unison);
-    unisonLowTune = frequency - ((unison - 1.f) / 2.f);
 }

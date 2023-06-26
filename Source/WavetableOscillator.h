@@ -13,6 +13,8 @@
 #include <JuceHeader.h>
 
 #include <cmath>
+#include <ctime>
+#include <iostream>
 
 #define WAVETABLE_LENGTH 2048
 
@@ -34,8 +36,13 @@ public:
 private:
     float getSampleIndexIncrement (float frequency);
 
+    void setRandomStartIndex ();
+
     float samples[WAVETABLE_LENGTH];
 
     float sampleIndexIncrement = 0.f;
     float currentSampleIndex = 0.f;
+
+    float phase = 0.f;
+    float random = 1.f;
 };

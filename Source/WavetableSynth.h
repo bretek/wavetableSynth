@@ -12,6 +12,8 @@
 
 #include <JuceHeader.h>
 
+#include <vector>
+
 #include "WavetableOscillator.h"
 
 class WavetableSynth
@@ -25,7 +27,7 @@ private:
     void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
     void handleMidi (juce::MidiMessage& message);
 
-    WavetableOscillator oscillator;
+    std::vector<WavetableOscillator> oscillators;
     double sampleRate;
 
     float frequency;

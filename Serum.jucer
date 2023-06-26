@@ -10,9 +10,6 @@
             file="../../../Downloads/seravek (1)/Seravek Basic/Seravek Basic.ttf"/>
     </GROUP>
     <GROUP id="{D07D45AE-6E0C-21A6-64B4-64929030375C}" name="Source">
-      <FILE id="fR2Qd1" name="WavetableNote.cpp" compile="1" resource="0"
-            file="Source/WavetableNote.cpp"/>
-      <FILE id="HJqotL" name="WavetableNote.h" compile="0" resource="0" file="Source/WavetableNote.h"/>
       <FILE id="EYiMnN" name="WavetableOscillator.cpp" compile="1" resource="0"
             file="Source/WavetableOscillator.cpp"/>
       <FILE id="WIIokX" name="WavetableOscillator.h" compile="0" resource="0"
