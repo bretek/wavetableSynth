@@ -2,13 +2,25 @@
 
 <JUCERPROJECT id="cCP9FW" name="Serum" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyName="Mad Audio" pluginFormats="buildStandalone" pluginVST3Category="Instrument">
+              companyName="Mad Audio" pluginFormats="buildStandalone,buildVST3"
+              pluginVST3Category="Instrument" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="ZxLqFj" name="Serum">
     <GROUP id="{41E398DE-84D4-2EC1-268B-DFCB78E9F34B}" name="Assets">
       <FILE id="nyI8Rp" name="Seravek Basic.ttf" compile="0" resource="1"
             file="../../../Downloads/seravek (1)/Seravek Basic/Seravek Basic.ttf"/>
     </GROUP>
     <GROUP id="{D07D45AE-6E0C-21A6-64B4-64929030375C}" name="Source">
+      <FILE id="fR2Qd1" name="WavetableNote.cpp" compile="1" resource="0"
+            file="Source/WavetableNote.cpp"/>
+      <FILE id="HJqotL" name="WavetableNote.h" compile="0" resource="0" file="Source/WavetableNote.h"/>
+      <FILE id="EYiMnN" name="WavetableOscillator.cpp" compile="1" resource="0"
+            file="Source/WavetableOscillator.cpp"/>
+      <FILE id="WIIokX" name="WavetableOscillator.h" compile="0" resource="0"
+            file="Source/WavetableOscillator.h"/>
+      <FILE id="uagMJ6" name="WavetableSynth.cpp" compile="1" resource="0"
+            file="Source/WavetableSynth.cpp"/>
+      <FILE id="aqjPU2" name="WavetableSynth.h" compile="0" resource="0"
+            file="Source/WavetableSynth.h"/>
       <FILE id="Y34j9p" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
       <FILE id="tuAbqS" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="wLGG0D" name="SerumLookAndFeel.cpp" compile="1" resource="0"
