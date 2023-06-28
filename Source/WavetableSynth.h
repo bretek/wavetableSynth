@@ -30,12 +30,5 @@ private:
     WavetableNote note;
     double sampleRate;
 
-    float frequency;
-    int unison;
-    float detune = 1.f;
-    float blend = 0.5f;
-    
-    float unisonLowTune;
-
-    float blendAmp;
+    float pan = 0.3f;
 };

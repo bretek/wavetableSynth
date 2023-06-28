@@ -39,6 +39,20 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
     {
         std::copy (channel1, channel1 + numSamples, buffer.getWritePointer (channel));
     }
+
+    if (pan != 0.5f)
+    {
+        float leftFactor = 1.f - pan;
+        float rightFactor = pan;
+        auto* leftChannel = buffer.getWritePointer (0);
+        auto* rightChannel = buffer.getWritePointer (1);
+
+        for (auto sample = 0; sample <= numSamples; ++sample)
+        {
+            leftChannel[sample] *= leftFactor;
+            rightChannel[sample] *= rightFactor;
+        }
+    }
 }
 
 void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample)
