@@ -2,14 +2,17 @@
 
 <JUCERPROJECT id="cCP9FW" name="Serum" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyName="Mad Audio" pluginFormats="buildStandalone,buildVST3"
-              pluginVST3Category="Instrument" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
+              companyName="Mad Audio" pluginFormats="buildStandalone" pluginVST3Category="Instrument"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="ZxLqFj" name="Serum">
     <GROUP id="{41E398DE-84D4-2EC1-268B-DFCB78E9F34B}" name="Assets">
       <FILE id="nyI8Rp" name="Seravek Basic.ttf" compile="0" resource="1"
             file="../../../Downloads/seravek (1)/Seravek Basic/Seravek Basic.ttf"/>
     </GROUP>
     <GROUP id="{D07D45AE-6E0C-21A6-64B4-64929030375C}" name="Source">
+      <FILE id="NNlMO8" name="WavetableNote.cpp" compile="1" resource="0"
+            file="Source/WavetableNote.cpp"/>
+      <FILE id="Fno0If" name="WavetableNote.h" compile="0" resource="0" file="Source/WavetableNote.h"/>
       <FILE id="EYiMnN" name="WavetableOscillator.cpp" compile="1" resource="0"
             file="Source/WavetableOscillator.cpp"/>
       <FILE id="WIIokX" name="WavetableOscillator.h" compile="0" resource="0"

@@ -14,14 +14,7 @@ void WavetableSynth::prepareToPlay (double sampleRate)
 {
     this->sampleRate = sampleRate;
 
-    for (int i = 0; i < 3; ++i)
-    {
-        oscillators.emplace_back ();
-    }
-
-    oscillators[0].sampleRate = sampleRate;
-    oscillators[1].sampleRate = sampleRate;
-    oscillators[2].sampleRate = sampleRate;
+    note.sampleRate = sampleRate;
 }
 
 void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
@@ -52,13 +45,11 @@ void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSam
 {
     auto channel = buffer.getWritePointer (0);
     
-    if (oscillators[0].isPlaying())
+    if (note.isPlaying())
     {
         for (auto sample = startSample; sample <= endSample; ++sample)
         {
-            channel[sample] += oscillators[0].getSample();
-            channel[sample] += oscillators[1].getSample();
-            channel[sample] += oscillators[2].getSample();
+            channel[sample] += note.getSample();
         }
     }
 }
@@ -67,14 +58,10 @@ void WavetableSynth::handleMidi (juce::MidiMessage& message)
 {
     if (message.isNoteOn())
     {
-        oscillators[0].setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()) - 20.f);
-        oscillators[1].setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()));
-        oscillators[2].setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()) + 20.f);
+        note.setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()));
     }
     else if (message.isNoteOff())
     {
-        oscillators[0].stop();
-        oscillators[1].stop();
-        oscillators[2].stop();
+        note.stop();
     }
 }

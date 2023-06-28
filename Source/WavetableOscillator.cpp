@@ -59,7 +59,7 @@ float WavetableOscillator::getSample ()
         currentSampleIndex -= static_cast<float>(WAVETABLE_LENGTH - 1);
     }
 
-    return sample * 0.3f;
+    return sample * 0.2f;
 }
 
 bool WavetableOscillator::isPlaying ()
