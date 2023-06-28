@@ -72,6 +72,7 @@ void WavetableSynth::handleMidi (juce::MidiMessage& message)
 {
     if (message.isNoteOn())
     {
+        note.setAmplitude (message.getVelocity() / 127.f);
         note.setFrequency (message.getMidiNoteInHertz(message.getNoteNumber()));
     }
     else if (message.isNoteOff())

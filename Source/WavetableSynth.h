@@ -31,4 +31,5 @@ private:
     double sampleRate;
 
     float pan = 0.3f;
+    float amplitude = 0.8f;
 };

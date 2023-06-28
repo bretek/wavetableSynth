@@ -22,18 +22,28 @@ void WavetableNote::setFrequency (float frequency)
         
         newOsc->sampleRate = sampleRate;
         newOsc->setFrequency (currentFrequency);
-        newOsc->setAmplitude ((1.f / numVoices) * blend);
+        newOsc->setAmplitude ((amplitude / numVoices) * blend);
         voices.push_back (*newOsc);
         currentFrequency += detune;
     }
 
-    voices[(numVoices/2)].setAmplitude (1.f / numVoices);
+    voices[(numVoices/2)].setAmplitude (amplitude / numVoices);
     if (numVoices % 2 == 0)
     {
-        voices[(numVoices/2)-1].setAmplitude (1.f / numVoices);
+        voices[(numVoices/2)-1].setAmplitude (amplitude / numVoices);
     }
 
     this->frequency = frequency;
+}
+
+void WavetableNote::setAmplitude (float amplitude)
+{
+    if (amplitude > 1.f)
+    {
+        amplitude = 0;
+    }
+    
+    this->amplitude = amplitude;
 }
 
 float WavetableNote::getSample ()

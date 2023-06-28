@@ -18,6 +18,7 @@ class WavetableNote
 {
 public:
     void setFrequency (float frequency);
+    void setAmplitude (float amplitude);
     float getSample ();
     void stop ();
     bool isPlaying ();
@@ -30,4 +31,5 @@ private:
     int numVoices = 5;
     float blend = 0.5f;
     float detune = 0.25f;
+    float amplitude = 1.f;
 };
