@@ -75,14 +75,7 @@ void WavetableSynth::handleMidi (juce::MidiMessage& message)
         note.setAmplitude (message.getVelocity() / 127.f);
         float frequency = message.getMidiNoteInHertz(message.getNoteNumber());
 
-        if (octaveOffset < 0)
-        {
-            frequency /= std::pow(2, std::abs(octaveOffset));
-        }
-        else
-        {
-            frequency *= std::pow(2, octaveOffset);
-        }
+        frequency *= std::pow(2, (static_cast<float>(octaveOffset * 12) + static_cast<float>(semiOffset) + fineOffset + coarsePitch) / 12.f);
 
         note.setFrequency (frequency);
     }

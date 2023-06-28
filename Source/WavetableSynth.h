@@ -30,8 +30,11 @@ private:
     WavetableNote note;
     double sampleRate;
 
-    float pan = 0.3f;
-    float amplitude = 0.8f;
+    float pan = 0.5f;
+    float amplitude = 1.f;
 
-    int octaveOffset = -2;
+    int octaveOffset = 0;
+    int semiOffset = 0;
+    float fineOffset = 0.f;
+    float coarsePitch = 0.f;
 };
