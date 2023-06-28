@@ -28,4 +28,6 @@ private:
 
     float frequency = 0.f;
     int numVoices = 5;
+    float blend = 0.5f;
+    float detune = 0.25f;
 };

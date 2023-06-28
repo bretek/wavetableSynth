@@ -26,6 +26,7 @@ public:
     void initWavetableSaw ();
 
     void setFrequency (float frequency);
+    void setAmplitude (float amplitude);
 
     float getSample ();
     bool isPlaying ();
@@ -45,4 +46,6 @@ private:
 
     float phase = 0.f;
     float random = 1.f;
+
+    float amplitude = 0.2f;
 };

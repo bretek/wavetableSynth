@@ -47,6 +47,11 @@ void WavetableOscillator::setFrequency (float frequency)
     sampleIndexIncrement = getSampleIndexIncrement (frequency);
 }
 
+void WavetableOscillator::setAmplitude (float amplitude)
+{
+    this->amplitude = amplitude;
+}
+
 float WavetableOscillator::getSample ()
 {
     const int floorIndex = std::fmod(currentSampleIndex, static_cast<float>(WAVETABLE_LENGTH));
@@ -59,7 +64,7 @@ float WavetableOscillator::getSample ()
         currentSampleIndex -= static_cast<float>(WAVETABLE_LENGTH - 1);
     }
 
-    return sample * 0.2f;
+    return sample * amplitude;
 }
 
 bool WavetableOscillator::isPlaying ()
