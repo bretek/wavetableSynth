@@ -32,4 +32,6 @@ private:
 
     float pan = 0.3f;
     float amplitude = 0.8f;
+
+    int octaveOffset = -2;
 };
