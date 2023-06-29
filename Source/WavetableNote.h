@@ -17,6 +17,8 @@
 class WavetableNote
 {
 public:
+    WavetableNote () {};
+
     void setFrequency (float frequency);
     void setAmplitude (float amplitude);
     void setNumVoices (std::atomic<float>* numVoices);

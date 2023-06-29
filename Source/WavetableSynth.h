@@ -16,6 +16,8 @@
 
 #include "WavetableNote.h"
 
+#define NUM_NOTES 128
+
 class WavetableSynth
 {
 public:
@@ -33,7 +35,7 @@ private:
     void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
     void handleMidi (juce::MidiMessage& message);
 
-    WavetableNote note;
+    std::vector<WavetableNote> notes;
     double sampleRate;
 
     std::atomic<float>* level;

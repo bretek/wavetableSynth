@@ -140,6 +140,14 @@ void SerumAudioProcessor::changeProgramName (int index, const juce::String& newN
 void SerumAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     wavetableSynth.prepareToPlay (sampleRate);
+
+    wavetableSynth.setUnison (unisonParameter);
+    wavetableSynth.setDetune (detuneParameter);
+    wavetableSynth.setBlend (blendParameter);
+    wavetableSynth.setPhase (phaseParameter);
+    wavetableSynth.setRandom (randomParameter);
+    wavetableSynth.setPan (panParameter);
+    wavetableSynth.setLevel (levelParameter);
 }
 
 void SerumAudioProcessor::releaseResources()
