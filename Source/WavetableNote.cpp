@@ -16,6 +16,17 @@ void WavetableNote::setFrequency (float frequency)
 
     float currentFrequency = frequency - (((static_cast<int>(*numVoices)-1) / 2) * (*detune));
 
+    // keep total level at one during blend
+    float scaleFactor;
+    if (static_cast<int>(*numVoices) % 2 == 0)
+    {
+        scaleFactor = 2.f / (2.f + (((*numVoices) - 2.f) * (*blend)));
+    }
+    else
+    {
+        scaleFactor = 1.f / (1.f + (((*numVoices) - 1.f) * (*blend)));
+    }
+
     for (int voice = 0; voice < static_cast<int>(*numVoices); ++voice)
     {
         WavetableOscillator* newOsc = new WavetableOscillator();
@@ -25,15 +36,17 @@ void WavetableNote::setFrequency (float frequency)
         newOsc->setRandom (random);
         newOsc->setRandomStartIndex ();
         newOsc->setFrequency (currentFrequency);
-        newOsc->setAmplitude ((amplitude / static_cast<int>(*numVoices)) * (*blend));
+        newOsc->setAmplitude ((*blend) * scaleFactor);
+
         voices.push_back (*newOsc);
         currentFrequency += (*detune);
     }
 
-    voices[(static_cast<int>(*numVoices)/2)].setAmplitude (amplitude / static_cast<int>(*numVoices));
+    // set centre voices louder
+    voices[(static_cast<int>(*numVoices)/2)].setAmplitude (1.f * scaleFactor);
     if (static_cast<int>(*numVoices) % 2 == 0)
     {
-        voices[(static_cast<int>(*numVoices)/2)-1].setAmplitude (amplitude / static_cast<int>(*numVoices));
+        voices[(static_cast<int>(*numVoices)/2)-1].setAmplitude (1.f * scaleFactor);
     }
 
     this->frequency = frequency;

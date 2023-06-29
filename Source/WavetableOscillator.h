@@ -51,5 +51,5 @@ private:
     std::atomic<float>* phase;
     std::atomic<float>* random;
 
-    float amplitude = 0.2f;
+    float amplitude = 0.f;
 };
