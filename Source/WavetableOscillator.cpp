@@ -16,7 +16,6 @@ WavetableOscillator::WavetableOscillator ()
     initWavetableSaw ();
 
     std::srand (std::time (nullptr));
-    setRandomStartIndex();
 }
 
 void WavetableOscillator::initWavetableSin ()
@@ -52,6 +51,16 @@ void WavetableOscillator::setAmplitude (float amplitude)
     this->amplitude = amplitude;
 }
 
+void WavetableOscillator::setPhase (std::atomic<float>* phase)
+{
+    this->phase = phase;
+}
+
+void WavetableOscillator::setRandom (std::atomic<float>* random)
+{
+    this->random = random;
+}
+
 float WavetableOscillator::getSample ()
 {
     const int floorIndex = std::fmod(currentSampleIndex, static_cast<float>(WAVETABLE_LENGTH));
@@ -85,7 +94,7 @@ float WavetableOscillator::getSampleIndexIncrement (float frequency)
 
 void WavetableOscillator::setRandomStartIndex ()
 {
-    float randPhase = (((std::rand() % WAVETABLE_LENGTH) * random) + (phase - (WAVETABLE_LENGTH * random) / 2));
+    float randPhase = (((std::rand() % WAVETABLE_LENGTH) * (*random)) + ((WAVETABLE_LENGTH * (*phase)) - (WAVETABLE_LENGTH * (*random)) / 2));
     randPhase = (static_cast<int>(randPhase) + WAVETABLE_LENGTH) % WAVETABLE_LENGTH;
     currentSampleIndex = randPhase;
 }

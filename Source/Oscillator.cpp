@@ -267,6 +267,21 @@ void Oscillator::attachBlendControl (juce::AudioProcessorValueTreeState& vts)
     blendAttachment.reset (new SliderAttachment (vts, "blend", blendControl));
 }
 
+void Oscillator::attachPhaseControl (juce::AudioProcessorValueTreeState& vts)
+{
+    phaseAttachment.reset (new SliderAttachment (vts, "phase", phaseControl));
+}
+
+void Oscillator::attachRandomControl (juce::AudioProcessorValueTreeState& vts)
+{
+    randAttachment.reset (new SliderAttachment (vts, "random", randControl));
+}
+
+void Oscillator::attachPanControl (juce::AudioProcessorValueTreeState& vts)
+{
+    panAttachment.reset (new SliderAttachment (vts, "pan", panControl));
+}
+
 void Oscillator::attachLevelControl (juce::AudioProcessorValueTreeState& vts)
 {
     levelAttachment.reset (new SliderAttachment (vts, "level", levelControl));

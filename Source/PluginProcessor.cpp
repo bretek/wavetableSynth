@@ -35,6 +35,18 @@ SerumAudioProcessor::SerumAudioProcessor()
                                                         "Blend",
                                                         0.f, 1.f,
                                                         0.5f),
+            std::make_unique<juce::AudioParameterFloat> ("phase",
+                                                        "Phase",
+                                                        0.f, 1.f,
+                                                        0.f),
+            std::make_unique<juce::AudioParameterFloat> ("random",
+                                                        "Random",
+                                                        0.f, 1.f,
+                                                        1.f),
+            std::make_unique<juce::AudioParameterFloat> ("pan",
+                                                        "Pan",
+                                                        0.f, 1.f,
+                                                        0.5f),
             std::make_unique<juce::AudioParameterFloat> ("level",
                                                         "Level",
                                                         0.f, 1.f,
@@ -44,11 +56,17 @@ SerumAudioProcessor::SerumAudioProcessor()
     unisonParameter = parameters.getRawParameterValue ("unison");
     detuneParameter = parameters.getRawParameterValue ("detune");
     blendParameter = parameters.getRawParameterValue ("blend");
+    phaseParameter = parameters.getRawParameterValue ("phase");
+    randomParameter = parameters.getRawParameterValue ("random");
+    panParameter = parameters.getRawParameterValue ("pan");
     levelParameter = parameters.getRawParameterValue ("level");
 
     wavetableSynth.setUnison (unisonParameter);
     wavetableSynth.setDetune (detuneParameter);
     wavetableSynth.setBlend (blendParameter);
+    wavetableSynth.setPhase (phaseParameter);
+    wavetableSynth.setRandom (randomParameter);
+    wavetableSynth.setPan (panParameter);
     wavetableSynth.setLevel (levelParameter);
 }
 

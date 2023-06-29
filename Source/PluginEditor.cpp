@@ -21,6 +21,9 @@ SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p, ju
     osc1.attachUnisonControl (valueTreeState);
     osc1.attachDetuneControl (valueTreeState);
     osc1.attachBlendControl (valueTreeState);
+    osc1.attachPhaseControl (valueTreeState);
+    osc1.attachRandomControl (valueTreeState);
+    osc1.attachPanControl (valueTreeState);
     osc1.attachLevelControl (valueTreeState);
 
     addAndMakeVisible (osc1);

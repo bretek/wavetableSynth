@@ -22,6 +22,8 @@ public:
     void setNumVoices (std::atomic<float>* numVoices);
     void setDetune (std::atomic<float>* detune);
     void setBlend (std::atomic<float>* blend);
+    void setPhase (std::atomic<float>* phase);
+    void setRandom (std::atomic<float>* random);
     float getSample ();
     void stop ();
     bool isPlaying ();
@@ -34,5 +36,7 @@ private:
     std::atomic<float>* numVoices;
     std::atomic<float>* detune;
     std::atomic<float>* blend;
+    std::atomic<float>* phase;
+    std::atomic<float>* random;
     float amplitude;
 };

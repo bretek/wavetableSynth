@@ -40,10 +40,10 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
         std::copy (channel1, channel1 + numSamples, buffer.getWritePointer (channel));
     }
 
-    if (pan != 0.5f)
+    if ((*pan) != 0.5f)
     {
-        float leftFactor = 1.f - pan;
-        float rightFactor = pan;
+        float leftFactor = 1.f - (*pan);
+        float rightFactor = (*pan);
         auto* leftChannel = buffer.getWritePointer (0);
         auto* rightChannel = buffer.getWritePointer (1);
 
@@ -68,6 +68,21 @@ void WavetableSynth::setDetune (std::atomic<float>* detune)
 void WavetableSynth::setBlend (std::atomic<float>* blend)
 {
     note.setBlend (blend);
+}
+
+void WavetableSynth::setPhase (std::atomic<float>* phase)
+{
+    note.setPhase (phase);
+}
+
+void WavetableSynth::setRandom (std::atomic<float>* random)
+{
+    note.setRandom (random);
+}
+
+void WavetableSynth::setPan (std::atomic<float>* pan)
+{
+    this->pan = pan;
 }
 
 void WavetableSynth::setLevel (std::atomic<float>* level)

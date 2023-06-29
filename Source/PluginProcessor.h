@@ -66,6 +66,9 @@ private:
     std::atomic<float>* unisonParameter = nullptr;
     std::atomic<float>* detuneParameter = nullptr;
     std::atomic<float>* blendParameter = nullptr;
+    std::atomic<float>* phaseParameter = nullptr;
+    std::atomic<float>* randomParameter = nullptr;
+    std::atomic<float>* panParameter = nullptr;
     std::atomic<float>* levelParameter = nullptr;
 
     //==============================================================================

@@ -28,6 +28,10 @@ public:
     void setFrequency (float frequency);
     void setAmplitude (float amplitude);
 
+    void setPhase (std::atomic<float>* phase);
+    void setRandom (std::atomic<float>* random);
+    void setRandomStartIndex ();
+
     float getSample ();
     bool isPlaying ();
     void stop ();
@@ -37,15 +41,13 @@ public:
 private:
     float getSampleIndexIncrement (float frequency);
 
-    void setRandomStartIndex ();
-
     float samples[WAVETABLE_LENGTH];
 
     float sampleIndexIncrement = 0.f;
     float currentSampleIndex = 0.f;
 
-    float phase = 0.f;
-    float random = 1.f;
+    std::atomic<float>* phase;
+    std::atomic<float>* random;
 
     float amplitude = 0.2f;
 };

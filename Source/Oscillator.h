@@ -29,6 +29,9 @@ public:
     void attachUnisonControl (juce::AudioProcessorValueTreeState& vts);
     void attachDetuneControl (juce::AudioProcessorValueTreeState& vts);
     void attachBlendControl (juce::AudioProcessorValueTreeState& vts);
+    void attachPhaseControl (juce::AudioProcessorValueTreeState& vts);
+    void attachRandomControl (juce::AudioProcessorValueTreeState& vts);
+    void attachPanControl (juce::AudioProcessorValueTreeState& vts);
     void attachLevelControl (juce::AudioProcessorValueTreeState& vts);
 
     typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
@@ -78,10 +81,13 @@ private:
     juce::Slider blendControl;
     std::unique_ptr<SliderAttachment> blendAttachment;
     juce::Slider phaseControl;
+    std::unique_ptr<SliderAttachment> phaseAttachment;
     juce::Slider randControl;
+    std::unique_ptr<SliderAttachment> randAttachment;
     juce::Slider wtControl;
     juce::Slider morphControl;
     juce::Slider panControl;
+    std::unique_ptr<SliderAttachment> panAttachment;
     juce::Slider levelControl;
     std::unique_ptr<SliderAttachment> levelAttachment;
 

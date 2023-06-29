@@ -25,6 +25,9 @@ public:
     void setUnison (std::atomic<float>* numVoices);
     void setDetune (std::atomic<float>* detune);
     void setBlend (std::atomic<float>* blend);
+    void setPhase (std::atomic<float>* phase);
+    void setRandom (std::atomic<float>* random);
+    void setPan (std::atomic<float>* pan);
     void setLevel (std::atomic<float>* level);
 private:
     void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
@@ -34,8 +37,8 @@ private:
     double sampleRate;
 
     std::atomic<float>* level;
+    std::atomic<float>* pan;
 
-    float pan = 0.5f;
     float amplitude = 1.f;
 
     int octaveOffset = 0;
