@@ -23,6 +23,23 @@ SerumAudioProcessor::SerumAudioProcessor()
 #endif
     parameters (*this, nullptr, juce::Identifier ("SerumControls"),
         {
+            std::make_unique<juce::AudioParameterInt> ("octave",
+                                                        "Octave",
+                                                        -4, 4,
+                                                        0),
+            std::make_unique<juce::AudioParameterInt> ("semi",
+                                                        "Semi",
+                                                        -24, 24,
+                                                        0),
+            std::make_unique<juce::AudioParameterFloat> ("fine",
+                                                        "Fine",
+                                                        -1.f, 1.f,
+                                                        0),
+            std::make_unique<juce::AudioParameterFloat> ("coarse",
+                                                        "Coarse",
+                                                        -100.f, 100.f,
+                                                        0),
+
             std::make_unique<juce::AudioParameterInt> ("unison",
                                                         "Unison",
                                                         1, 16,
@@ -53,6 +70,12 @@ SerumAudioProcessor::SerumAudioProcessor()
                                                         0.8f)
         })
 {
+
+    octaveParameter = parameters.getRawParameterValue ("octave");
+    semiParameter = parameters.getRawParameterValue ("semi");
+    fineParameter = parameters.getRawParameterValue ("fine");
+    coarseParameter = parameters.getRawParameterValue ("coarse");
+
     unisonParameter = parameters.getRawParameterValue ("unison");
     detuneParameter = parameters.getRawParameterValue ("detune");
     blendParameter = parameters.getRawParameterValue ("blend");
@@ -140,6 +163,8 @@ void SerumAudioProcessor::changeProgramName (int index, const juce::String& newN
 void SerumAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     wavetableSynth.prepareToPlay (sampleRate);
+
+    wavetableSynth.setPitchControls (octaveParameter, semiParameter, fineParameter, coarseParameter);
 
     wavetableSynth.setUnison (unisonParameter);
     wavetableSynth.setDetune (detuneParameter);

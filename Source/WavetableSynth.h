@@ -24,6 +24,8 @@ public:
     void prepareToPlay (double sampleRate);
     void processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer&);
 
+    void setPitchControls (std::atomic<float>* octave, std::atomic<float>* semi, std::atomic<float>* fine, std::atomic<float>* coarse);
+
     void setUnison (std::atomic<float>* numVoices);
     void setDetune (std::atomic<float>* detune);
     void setBlend (std::atomic<float>* blend);
@@ -43,8 +45,8 @@ private:
 
     float amplitude = 1.f;
 
-    int octaveOffset = 0;
-    int semiOffset = 0;
-    float fineOffset = 0.f;
-    float coarsePitch = 0.f;
+    std::atomic<float>* octaveOffset;
+    std::atomic<float>* semiOffset;
+    std::atomic<float>* fineOffset;
+    std::atomic<float>* coarsePitch;
 };

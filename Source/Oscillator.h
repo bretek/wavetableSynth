@@ -26,6 +26,8 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void attachPitchControls (juce::AudioProcessorValueTreeState& vts);
+    
     void attachUnisonControl (juce::AudioProcessorValueTreeState& vts);
     void attachDetuneControl (juce::AudioProcessorValueTreeState& vts);
     void attachBlendControl (juce::AudioProcessorValueTreeState& vts);
@@ -60,9 +62,13 @@ private:
     juce::Label coarseSlideLabel;
 
     juce::Slider octaveSlide;
+    std::unique_ptr<SliderAttachment> octaveAttachment;
     juce::Slider semiSlide;
+    std::unique_ptr<SliderAttachment> semiAttachment;
     juce::Slider fineSlide;
+    std::unique_ptr<SliderAttachment> fineAttachment;
     juce::Slider coarseSlide;
+    std::unique_ptr<SliderAttachment> coarseAttachment;
 
     juce::DrawableRectangle wtBackground;
     juce::DrawableRectangle wtSlideBackground;

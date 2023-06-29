@@ -18,6 +18,8 @@ SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p, ju
     setSize (540, 620);
     setResizable (true, true);
 
+    osc1.attachPitchControls (valueTreeState);
+
     osc1.attachUnisonControl (valueTreeState);
     osc1.attachDetuneControl (valueTreeState);
     osc1.attachBlendControl (valueTreeState);

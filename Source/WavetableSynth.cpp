@@ -64,6 +64,14 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
     }
 }
 
+void WavetableSynth::setPitchControls (std::atomic<float>* octave, std::atomic<float>* semi, std::atomic<float>* fine, std::atomic<float>* coarse)
+{
+    octaveOffset = octave;
+    semiOffset = semi;
+    fineOffset = fine;
+    coarsePitch = coarse;
+}
+
 void WavetableSynth::setUnison (std::atomic<float>* numVoices)
 {
     //for (auto& note : notes)
@@ -138,7 +146,7 @@ void WavetableSynth::handleMidi (juce::MidiMessage& message)
         notes[message.getNoteNumber()].setAmplitude (message.getVelocity() / 127.f);
         float frequency = message.getMidiNoteInHertz(message.getNoteNumber());
 
-        frequency *= std::pow(2, (static_cast<float>(octaveOffset * 12) + static_cast<float>(semiOffset) + fineOffset + coarsePitch) / 12.f);
+        frequency *= std::pow(2, (static_cast<float>((*octaveOffset) * 12) + static_cast<float>((*semiOffset)) + (*fineOffset) + (*coarsePitch)) / 12.f);
 
         notes[message.getNoteNumber()].setFrequency (frequency);
     }

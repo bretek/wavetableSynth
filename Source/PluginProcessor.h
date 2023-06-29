@@ -63,6 +63,11 @@ private:
 
     WavetableSynth wavetableSynth;
 
+    std::atomic<float>* octaveParameter = nullptr;
+    std::atomic<float>* semiParameter = nullptr;
+    std::atomic<float>* fineParameter = nullptr;
+    std::atomic<float>* coarseParameter = nullptr;
+
     std::atomic<float>* unisonParameter = nullptr;
     std::atomic<float>* detuneParameter = nullptr;
     std::atomic<float>* blendParameter = nullptr;

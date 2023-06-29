@@ -49,7 +49,7 @@ Oscillator::Oscillator()
 
     octaveSlide.setRange (-4, 4, 1.0);
     semiSlide.setRange (-24, 24, 1.0);
-    fineSlide.setRange (-5, 5, 0.01);
+    fineSlide.setRange (-1, 1, 0.01);
     coarseSlide.setRange (-100, 100, 0.01);
 
     for (auto control : pitchControls)
@@ -250,6 +250,14 @@ void Oscillator::resized()
     fitFlexBoxBackground (labelSet3, labelBackground3);
     fitFlexBoxBackground (labelSet4, labelBackground4);
     fitFlexBoxBackground (labelSet5, labelBackground5);
+}
+
+void Oscillator::attachPitchControls (juce::AudioProcessorValueTreeState& vts)
+{
+    octaveAttachment.reset (new SliderAttachment (vts, "octave", octaveSlide));
+    semiAttachment.reset (new SliderAttachment (vts, "semi", semiSlide));
+    fineAttachment.reset (new SliderAttachment (vts, "fine", fineSlide));
+    coarseAttachment.reset (new SliderAttachment (vts, "coarse", coarseSlide));
 }
 
 void Oscillator::attachUnisonControl (juce::AudioProcessorValueTreeState& vts)
