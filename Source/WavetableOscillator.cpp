@@ -94,7 +94,12 @@ float WavetableOscillator::getSampleIndexIncrement (float frequency)
 
 void WavetableOscillator::setRandomStartIndex ()
 {
-    float randPhase = (((std::rand() % WAVETABLE_LENGTH) * (*random)) + ((WAVETABLE_LENGTH * (*phase)) - (WAVETABLE_LENGTH * (*random)) / 2));
+    currentSampleIndex = calculateRandomStartSample ((*phase), (*random));
+}
+
+float WavetableOscillator::calculateRandomStartSample (float phase, float random)
+{
+    float randPhase = (((std::rand() % WAVETABLE_LENGTH) * random) + ((WAVETABLE_LENGTH * (phase - random)) / 2));
     randPhase = (static_cast<int>(randPhase) + WAVETABLE_LENGTH) % WAVETABLE_LENGTH;
-    currentSampleIndex = randPhase;
+    return randPhase;
 }

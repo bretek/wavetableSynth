@@ -41,6 +41,8 @@ public:
 private:
     float getSampleIndexIncrement (float frequency);
 
+    float calculateRandomStartSample (float phase, float random);
+
     float samples[WAVETABLE_LENGTH];
 
     float sampleIndexIncrement = 0.f;
