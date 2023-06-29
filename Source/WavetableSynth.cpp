@@ -55,6 +55,26 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
     }
 }
 
+void WavetableSynth::setUnison (std::atomic<float>* numVoices)
+{
+    note.setNumVoices (numVoices);
+}
+
+void WavetableSynth::setDetune (std::atomic<float>* detune)
+{
+    note.setDetune (detune);
+}
+
+void WavetableSynth::setBlend (std::atomic<float>* blend)
+{
+    note.setBlend (blend);
+}
+
+void WavetableSynth::setLevel (std::atomic<float>* level)
+{
+    this->level = level;
+}
+
 void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample)
 {
     auto channel = buffer.getWritePointer (0);
@@ -63,7 +83,7 @@ void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSam
     {
         for (auto sample = startSample; sample <= endSample; ++sample)
         {
-            channel[sample] += note.getSample();
+            channel[sample] += note.getSample() * (*level);
         }
     }
 }

@@ -59,7 +59,14 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    juce::AudioProcessorValueTreeState parameters;
+
     WavetableSynth wavetableSynth;
+
+    std::atomic<float>* unisonParameter = nullptr;
+    std::atomic<float>* detuneParameter = nullptr;
+    std::atomic<float>* blendParameter = nullptr;
+    std::atomic<float>* levelParameter = nullptr;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SerumAudioProcessor)

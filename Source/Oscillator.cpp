@@ -252,6 +252,26 @@ void Oscillator::resized()
     fitFlexBoxBackground (labelSet5, labelBackground5);
 }
 
+void Oscillator::attachUnisonControl (juce::AudioProcessorValueTreeState& vts)
+{
+    unisonAttachment.reset (new SliderAttachment (vts, "unison", unisonControl));
+}
+
+void Oscillator::attachDetuneControl (juce::AudioProcessorValueTreeState& vts)
+{
+    detuneAttachment.reset (new SliderAttachment (vts, "detune", detuneControl));
+}
+
+void Oscillator::attachBlendControl (juce::AudioProcessorValueTreeState& vts)
+{
+    blendAttachment.reset (new SliderAttachment (vts, "blend", blendControl));
+}
+
+void Oscillator::attachLevelControl (juce::AudioProcessorValueTreeState& vts)
+{
+    levelAttachment.reset (new SliderAttachment (vts, "level", levelControl));
+}
+
 juce::FlexBox Oscillator::layoutTitleBar()
 {
     juce::FlexBox bar;

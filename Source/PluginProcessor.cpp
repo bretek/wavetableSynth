@@ -19,9 +19,37 @@ SerumAudioProcessor::SerumAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
 #endif
+    parameters (*this, nullptr, juce::Identifier ("SerumControls"),
+        {
+            std::make_unique<juce::AudioParameterInt> ("unison",
+                                                        "Unison",
+                                                        1, 16,
+                                                        1),
+            std::make_unique<juce::AudioParameterFloat> ("detune",
+                                                        "Detune",
+                                                        0.f, 1.f,
+                                                        0.5f),
+            std::make_unique<juce::AudioParameterFloat> ("blend",
+                                                        "Blend",
+                                                        0.f, 1.f,
+                                                        0.5f),
+            std::make_unique<juce::AudioParameterFloat> ("level",
+                                                        "Level",
+                                                        0.f, 1.f,
+                                                        0.8f)
+        })
 {
+    unisonParameter = parameters.getRawParameterValue ("unison");
+    detuneParameter = parameters.getRawParameterValue ("detune");
+    blendParameter = parameters.getRawParameterValue ("blend");
+    levelParameter = parameters.getRawParameterValue ("level");
+
+    wavetableSynth.setUnison (unisonParameter);
+    wavetableSynth.setDetune (detuneParameter);
+    wavetableSynth.setBlend (blendParameter);
+    wavetableSynth.setLevel (levelParameter);
 }
 
 SerumAudioProcessor::~SerumAudioProcessor()
@@ -148,7 +176,7 @@ bool SerumAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* SerumAudioProcessor::createEditor()
 {
-    return new SerumAudioProcessorEditor (*this);
+    return new SerumAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================

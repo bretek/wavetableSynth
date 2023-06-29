@@ -19,6 +19,9 @@ class WavetableNote
 public:
     void setFrequency (float frequency);
     void setAmplitude (float amplitude);
+    void setNumVoices (std::atomic<float>* numVoices);
+    void setDetune (std::atomic<float>* detune);
+    void setBlend (std::atomic<float>* blend);
     float getSample ();
     void stop ();
     bool isPlaying ();
@@ -28,8 +31,8 @@ private:
     std::vector<WavetableOscillator> voices;
 
     float frequency = 0.f;
-    int numVoices = 5;
-    float blend = 0.5f;
-    float detune = 0.25f;
-    float amplitude = 1.f;
+    std::atomic<float>* numVoices;
+    std::atomic<float>* detune;
+    std::atomic<float>* blend;
+    float amplitude;
 };

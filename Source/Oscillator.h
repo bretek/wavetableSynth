@@ -26,6 +26,12 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void attachUnisonControl (juce::AudioProcessorValueTreeState& vts);
+    void attachDetuneControl (juce::AudioProcessorValueTreeState& vts);
+    void attachBlendControl (juce::AudioProcessorValueTreeState& vts);
+    void attachLevelControl (juce::AudioProcessorValueTreeState& vts);
+
+    typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 private:
     // looks and feels
     SerumLookAndFeel serumLookAndFeel;
@@ -66,14 +72,18 @@ private:
 
     // WT Controls
     juce::Slider unisonControl;
+    std::unique_ptr<SliderAttachment> unisonAttachment;
     juce::Slider detuneControl;
+    std::unique_ptr<SliderAttachment> detuneAttachment;
     juce::Slider blendControl;
+    std::unique_ptr<SliderAttachment> blendAttachment;
     juce::Slider phaseControl;
     juce::Slider randControl;
     juce::Slider wtControl;
     juce::Slider morphControl;
     juce::Slider panControl;
     juce::Slider levelControl;
+    std::unique_ptr<SliderAttachment> levelAttachment;
 
     juce::DrawableRectangle labelBackground1;
     juce::DrawableRectangle labelBackground2;

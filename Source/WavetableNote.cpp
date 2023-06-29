@@ -14,23 +14,23 @@ void WavetableNote::setFrequency (float frequency)
 {
     voices.clear();
 
-    float currentFrequency = frequency - (((numVoices-1) / 2) * detune);
+    float currentFrequency = frequency - (((static_cast<int>(*numVoices)-1) / 2) * (*detune));
 
-    for (int voice = 0; voice < numVoices; ++voice)
+    for (int voice = 0; voice < static_cast<int>(*numVoices); ++voice)
     {
         WavetableOscillator* newOsc = new WavetableOscillator();
         
         newOsc->sampleRate = sampleRate;
         newOsc->setFrequency (currentFrequency);
-        newOsc->setAmplitude ((amplitude / numVoices) * blend);
+        newOsc->setAmplitude ((amplitude / static_cast<int>(*numVoices)) * (*blend));
         voices.push_back (*newOsc);
-        currentFrequency += detune;
+        currentFrequency += (*detune);
     }
 
-    voices[(numVoices/2)].setAmplitude (amplitude / numVoices);
-    if (numVoices % 2 == 0)
+    voices[(static_cast<int>(*numVoices)/2)].setAmplitude (amplitude / static_cast<int>(*numVoices));
+    if (static_cast<int>(*numVoices) % 2 == 0)
     {
-        voices[(numVoices/2)-1].setAmplitude (amplitude / numVoices);
+        voices[(static_cast<int>(*numVoices)/2)-1].setAmplitude (amplitude / static_cast<int>(*numVoices));
     }
 
     this->frequency = frequency;
@@ -44,6 +44,21 @@ void WavetableNote::setAmplitude (float amplitude)
     }
     
     this->amplitude = amplitude;
+}
+
+void WavetableNote::setNumVoices (std::atomic<float>* numVoices)
+{
+    this->numVoices = numVoices;
+}
+
+void WavetableNote::setDetune (std::atomic<float>* detune)
+{
+    this->detune = detune;
+}
+
+void WavetableNote::setBlend (std::atomic<float>* blend)
+{
+    this->blend = blend;
 }
 
 float WavetableNote::getSample ()

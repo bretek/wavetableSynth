@@ -10,12 +10,18 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
+    : AudioProcessorEditor (&p), audioProcessor (p),
+    valueTreeState (vts)
 {
     this->setLookAndFeel (&serumLookAndFeel);
     setSize (540, 620);
     setResizable (true, true);
+
+    osc1.attachUnisonControl (valueTreeState);
+    osc1.attachDetuneControl (valueTreeState);
+    osc1.attachBlendControl (valueTreeState);
+    osc1.attachLevelControl (valueTreeState);
 
     addAndMakeVisible (osc1);
 }
