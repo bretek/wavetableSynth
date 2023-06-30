@@ -29,7 +29,7 @@ void WavetableOscillator::initWavetableSin ()
 void WavetableOscillator::initWavetableSaw ()
 {
     float currentSampleValue = 0;
-    float sampleValueDifference = 1 / static_cast<float>(WAVETABLE_LENGTH-1);
+    float sampleValueDifference = 2.f / static_cast<float>(WAVETABLE_LENGTH-1);
     for (int sample = 0; sample < WAVETABLE_LENGTH; ++sample)
     {
         samples[sample] = currentSampleValue;

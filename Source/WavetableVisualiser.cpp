@@ -70,7 +70,6 @@ void WavetableVisualiser::initWavetableSaw ()
     for (int sample = 0; sample < WAVETABLE_LENGTH; ++sample)
     {
         samples[sample] = currentSampleValue;
-        std::cout << currentSampleValue << std::endl;
         currentSampleValue += sampleValueDifference;
         if (currentSampleValue > 1.f)
         {
