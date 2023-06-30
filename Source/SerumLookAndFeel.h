@@ -29,6 +29,7 @@ public:
 
         SerumGreen1,
         SerumGreen2,
+        SerumGreen3,
 
         SerumRed1
     };

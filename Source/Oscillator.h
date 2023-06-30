@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 
 #include "SerumLookAndFeel.h"
+#include "WavetableVisualiser.h"
 
 //==============================================================================
 /*
@@ -27,7 +28,7 @@ public:
     void resized() override;
 
     void attachPitchControls (juce::AudioProcessorValueTreeState& vts);
-    
+
     void attachUnisonControl (juce::AudioProcessorValueTreeState& vts);
     void attachDetuneControl (juce::AudioProcessorValueTreeState& vts);
     void attachBlendControl (juce::AudioProcessorValueTreeState& vts);
@@ -77,7 +78,7 @@ private:
     juce::DrawableRectangle slideBackground3;
     juce::DrawableRectangle slideBackground4;
 
-    juce::TextButton wtEditor;
+    WavetableVisualiser wtEditor;
 
     // WT Controls
     juce::Slider unisonControl;

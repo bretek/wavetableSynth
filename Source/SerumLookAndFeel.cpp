@@ -24,6 +24,7 @@ SerumLookAndFeel::SerumLookAndFeel ()
 
     setColour (SerumGreen1, juce::Colour (134, 248, 1));
     setColour (SerumGreen2, juce::Colour (41, 66, 16));
+    setColour (SerumGreen3, juce::Colour (68, 126, 1));
 
     setColour (SerumRed1, juce::Colour (64, 44, 43));
 
