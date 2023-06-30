@@ -30,6 +30,7 @@ public:
 
 private:
     juce::Point<int> sampleToPixelPoint (float sampleValue, int sampleNum);
+    void initWavetableSin ();
     void initWavetableSaw ();
 
     float samples[WAVETABLE_LENGTH];

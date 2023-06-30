@@ -63,6 +63,14 @@ juce::Point<int> WavetableVisualiser::sampleToPixelPoint (float sampleValue, int
     return juce::Point<int> (x, y);
 }
 
+void WavetableVisualiser::initWavetableSin ()
+{
+    for (int sample = 0; sample < WAVETABLE_LENGTH; ++sample)
+    {
+        samples[sample] = std::sin ((((float)sample / WAVETABLE_LENGTH)) * juce::MathConstants<float>::twoPi);
+    }
+}
+
 void WavetableVisualiser::initWavetableSaw ()
 {
     float currentSampleValue = 0;
