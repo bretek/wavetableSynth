@@ -13,11 +13,19 @@
 WavetableOscillator::WavetableOscillator ()
 {
     std::srand (std::time (nullptr));
+
+    extern struct WavetableSynthParameters wavetableSynthParametersExt;
+    wavetableSynthParameters = &wavetableSynthParametersExt;
+    wavetableSamples = wavetableSynthParameters->wavetableSamples;
+    phase = wavetableSynthParameters->phaseParameter;
+    random = wavetableSynthParameters->randomParameter;
+    sampleRate = wavetableSynthParameters->sampleRate;
 }
 
 void WavetableOscillator::setFrequency (float frequency)
 {
-    sampleIndexIncrement = getSampleIndexIncrement (frequency);
+    this->frequency = frequency;
+    sampleIndexIncrement = calculateSampleIndexIncrement (frequency);
 }
 
 void WavetableOscillator::setAmplitude (float amplitude)
@@ -25,60 +33,50 @@ void WavetableOscillator::setAmplitude (float amplitude)
     this->amplitude = amplitude;
 }
 
-void WavetableOscillator::setPhase (std::atomic<float>* phase)
+void WavetableOscillator::setPan (float pan)
 {
-    this->phase = phase;
+    this-> pan = pan;
 }
 
-void WavetableOscillator::setRandom (std::atomic<float>* random)
+float WavetableOscillator::getNextSample ()
 {
-    this->random = random;
-}
-
-void WavetableOscillator::setWavetable (std::vector<float>* wavetableSamples)
-{
-    samples = wavetableSamples;
-}
-
-float WavetableOscillator::getSample ()
-{
-    const int floorIndex = std::fmod(currentSampleIndex, static_cast<float>(WAVETABLE_LENGTH));
-    const float sample = ((currentSampleIndex - floorIndex) * (*samples)[floorIndex + 1]) +
-            ((floorIndex + 1 - currentSampleIndex) * (*samples)[floorIndex]);
+    const int floorIndex = std::fmod(currentSampleIndex, static_cast<float>(wavetableSamples->size()));
+    const float sample = ((currentSampleIndex - floorIndex) * (*wavetableSamples)[floorIndex + 1]) +
+            ((floorIndex + 1 - currentSampleIndex) * (*wavetableSamples)[floorIndex]);
     currentSampleIndex += sampleIndexIncrement;
 
-    if (currentSampleIndex >= WAVETABLE_LENGTH - 1)
+    if (currentSampleIndex >= wavetableSamples->size() - 1)
     {
-        currentSampleIndex -= static_cast<float>(WAVETABLE_LENGTH - 1);
+        currentSampleIndex -= static_cast<float>(wavetableSamples->size() - 1);
     }
 
     return sample * amplitude;
 }
 
-bool WavetableOscillator::isPlaying ()
+bool WavetableOscillator::isPlaying () const
 {
-    return sampleIndexIncrement != 0.f;
+    return playing;
+}
+
+void WavetableOscillator::start ()
+{
+    currentSampleIndex = calculateRandomStartSample ((*phase), (*random));
+    playing = true;
 }
 
 void WavetableOscillator::stop ()
 {
-    setRandomStartIndex ();
-    sampleIndexIncrement = 0.f;
+    playing = false;
 }
 
-float WavetableOscillator::getSampleIndexIncrement (float frequency)
+float WavetableOscillator::calculateSampleIndexIncrement (float frequency) const
 {
-    return (frequency * static_cast<float>(WAVETABLE_LENGTH)) / (float)sampleRate;
+    return (frequency * static_cast<float>(wavetableSamples->size())) / (float)(*sampleRate);
 }
 
-void WavetableOscillator::setRandomStartIndex ()
+float WavetableOscillator::calculateRandomStartSample (float phase, float random) const
 {
-    currentSampleIndex = calculateRandomStartSample ((*phase), (*random));
-}
-
-float WavetableOscillator::calculateRandomStartSample (float phase, float random)
-{
-    float randPhase = (((std::rand() % WAVETABLE_LENGTH) * random) + ((WAVETABLE_LENGTH * (phase - random)) / 2));
-    randPhase = (static_cast<int>(randPhase) + WAVETABLE_LENGTH) % WAVETABLE_LENGTH;
+    float randPhase = (((std::rand() % wavetableSamples->size()) * random) + ((wavetableSamples->size() * (phase - random)) / 2));
+    randPhase = (static_cast<int>(randPhase) + wavetableSamples->size()) % wavetableSamples->size();
     return randPhase;
 }

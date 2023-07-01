@@ -15,6 +15,10 @@ void WavetableSynth::prepareToPlay (double sampleRate)
     this->sampleRate = sampleRate;
 
     initWavetableSquare ();
+    extern struct WavetableSynthParameters wavetableSynthParametersExt;
+    wavetableSynthParameters = &wavetableSynthParametersExt;
+    wavetableSynthParameters->wavetableSamples = &wavetableSamples;
+    wavetableSynthParameters->sampleRate = &this->sampleRate;
 
     notes.clear();
 
@@ -22,7 +26,6 @@ void WavetableSynth::prepareToPlay (double sampleRate)
     {
         WavetableNote* newNote = new WavetableNote();
         newNote->sampleRate = sampleRate;
-        newNote->setWavetable (&wavetableSamples);
         notes.push_back (*newNote);
     }
 }
@@ -97,22 +100,6 @@ void WavetableSynth::setBlend (std::atomic<float>* blend)
     for (int i = 0; i < notes.size(); ++i)
     {
         notes[i].setBlend (blend);
-    }
-}
-
-void WavetableSynth::setPhase (std::atomic<float>* phase)
-{
-    for (int i = 0; i < notes.size(); ++i)
-    {
-        notes[i].setPhase (phase);
-    }
-}
-
-void WavetableSynth::setRandom (std::atomic<float>* random)
-{
-    for (int i = 0; i < notes.size(); ++i)
-    {
-        notes[i].setRandom (random);
     }
 }
 

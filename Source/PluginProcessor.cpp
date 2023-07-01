@@ -70,27 +70,27 @@ SerumAudioProcessor::SerumAudioProcessor()
                                                         0.8f)
         })
 {
+    extern struct WavetableSynthParameters wavetableSynthParametersExt;
+    this->wavetableSynthParameters = &wavetableSynthParametersExt;
 
-    octaveParameter = parameters.getRawParameterValue ("octave");
-    semiParameter = parameters.getRawParameterValue ("semi");
-    fineParameter = parameters.getRawParameterValue ("fine");
-    coarseParameter = parameters.getRawParameterValue ("coarse");
+    wavetableSynthParameters->octaveParameter = parameters.getRawParameterValue ("octave");
+    wavetableSynthParameters->semiParameter = parameters.getRawParameterValue ("semi");
+    wavetableSynthParameters->fineParameter = parameters.getRawParameterValue ("fine");
+    wavetableSynthParameters->coarseParameter = parameters.getRawParameterValue ("coarse");
 
-    unisonParameter = parameters.getRawParameterValue ("unison");
-    detuneParameter = parameters.getRawParameterValue ("detune");
-    blendParameter = parameters.getRawParameterValue ("blend");
-    phaseParameter = parameters.getRawParameterValue ("phase");
-    randomParameter = parameters.getRawParameterValue ("random");
-    panParameter = parameters.getRawParameterValue ("pan");
-    levelParameter = parameters.getRawParameterValue ("level");
+    wavetableSynthParameters->unisonParameter = parameters.getRawParameterValue ("unison");
+    wavetableSynthParameters->detuneParameter = parameters.getRawParameterValue ("detune");
+    wavetableSynthParameters->blendParameter = parameters.getRawParameterValue ("blend");
+    wavetableSynthParameters->phaseParameter = parameters.getRawParameterValue ("phase");
+    wavetableSynthParameters->randomParameter = parameters.getRawParameterValue ("random");
+    wavetableSynthParameters->panParameter = parameters.getRawParameterValue ("pan");
+    wavetableSynthParameters->levelParameter = parameters.getRawParameterValue ("level");
 
-    wavetableSynth.setUnison (unisonParameter);
-    wavetableSynth.setDetune (detuneParameter);
-    wavetableSynth.setBlend (blendParameter);
-    wavetableSynth.setPhase (phaseParameter);
-    wavetableSynth.setRandom (randomParameter);
-    wavetableSynth.setPan (panParameter);
-    wavetableSynth.setLevel (levelParameter);
+    wavetableSynth.setUnison (wavetableSynthParameters->unisonParameter);
+    wavetableSynth.setDetune (wavetableSynthParameters->detuneParameter);
+    wavetableSynth.setBlend (wavetableSynthParameters->blendParameter);
+    wavetableSynth.setPan (wavetableSynthParameters->panParameter);
+    wavetableSynth.setLevel (wavetableSynthParameters->levelParameter);
 }
 
 SerumAudioProcessor::~SerumAudioProcessor()
@@ -164,15 +164,16 @@ void SerumAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     wavetableSynth.prepareToPlay (sampleRate);
 
-    wavetableSynth.setPitchControls (octaveParameter, semiParameter, fineParameter, coarseParameter);
+    wavetableSynth.setPitchControls (wavetableSynthParameters->octaveParameter, 
+                                    wavetableSynthParameters->semiParameter, 
+                                    wavetableSynthParameters->fineParameter, 
+                                    wavetableSynthParameters->coarseParameter);
 
-    wavetableSynth.setUnison (unisonParameter);
-    wavetableSynth.setDetune (detuneParameter);
-    wavetableSynth.setBlend (blendParameter);
-    wavetableSynth.setPhase (phaseParameter);
-    wavetableSynth.setRandom (randomParameter);
-    wavetableSynth.setPan (panParameter);
-    wavetableSynth.setLevel (levelParameter);
+    wavetableSynth.setUnison (wavetableSynthParameters->unisonParameter);
+    wavetableSynth.setDetune (wavetableSynthParameters->detuneParameter);
+    wavetableSynth.setBlend (wavetableSynthParameters->blendParameter);
+    wavetableSynth.setPan (wavetableSynthParameters->panParameter);
+    wavetableSynth.setLevel (wavetableSynthParameters->levelParameter);
 }
 
 void SerumAudioProcessor::releaseResources()

@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 
 #include "WavetableSynth.h"
+#include "WavetableSynthParameters.h"
 
 //==============================================================================
 /**
@@ -63,18 +64,7 @@ private:
 
     WavetableSynth wavetableSynth;
 
-    std::atomic<float>* octaveParameter = nullptr;
-    std::atomic<float>* semiParameter = nullptr;
-    std::atomic<float>* fineParameter = nullptr;
-    std::atomic<float>* coarseParameter = nullptr;
-
-    std::atomic<float>* unisonParameter = nullptr;
-    std::atomic<float>* detuneParameter = nullptr;
-    std::atomic<float>* blendParameter = nullptr;
-    std::atomic<float>* phaseParameter = nullptr;
-    std::atomic<float>* randomParameter = nullptr;
-    std::atomic<float>* panParameter = nullptr;
-    std::atomic<float>* levelParameter = nullptr;
+    WavetableSynthParameters* wavetableSynthParameters;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SerumAudioProcessor)

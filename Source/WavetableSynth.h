@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "WavetableNote.h"
+#include "WavetableSynthParameters.h"
 
 #define NUM_NOTES 128
 #define WAVETABLE_LENGTH 2048
@@ -43,6 +44,8 @@ private:
     void initWavetableSin ();
     void initWavetableSaw ();
     void initWavetableSquare ();
+
+    WavetableSynthParameters* wavetableSynthParameters;
 
     std::vector<WavetableNote> notes;
     double sampleRate;

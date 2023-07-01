@@ -12,11 +12,9 @@
 
 #include <JuceHeader.h>
 
-#include <cmath>
 #include <ctime>
-#include <iostream>
 
-#define WAVETABLE_LENGTH 2048
+#include "WavetableSynthParameters.h"
 
 class WavetableOscillator
 {
@@ -25,30 +23,33 @@ public:
 
     void setFrequency (float frequency);
     void setAmplitude (float amplitude);
-    void setWavetable (std::vector<float>* wavetableSamples);
+    void setPan (float pan);
 
-    void setPhase (std::atomic<float>* phase);
-    void setRandom (std::atomic<float>* random);
-    void setRandomStartIndex ();
+    float getNextSample ();
 
-    float getSample ();
-    bool isPlaying ();
+    bool isPlaying () const;
+    void start ();
     void stop ();
-    
-    double sampleRate;
 
 private:
-    float getSampleIndexIncrement (float frequency);
+    float interpolateSamples (std::vector<float> samples, float index) const;
+    float calculateSampleIndexIncrement (float frequency) const;
+    float calculateRandomStartSample (float phase, float random) const;
 
-    float calculateRandomStartSample (float phase, float random);
+    WavetableSynthParameters* wavetableSynthParameters;
 
-    std::vector<float>* samples;
+    double* sampleRate;
+
+    std::vector<float>* wavetableSamples;
+    std::atomic<float>* phase;
+    std::atomic<float>* random;
+
+    float frequency = 0.f;
+    float amplitude = 1.f;
+    float pan = 0.5f;
 
     float sampleIndexIncrement = 0.f;
     float currentSampleIndex = 0.f;
 
-    std::atomic<float>* phase;
-    std::atomic<float>* random;
-
-    float amplitude = 0.f;
+    bool playing = false;
 };

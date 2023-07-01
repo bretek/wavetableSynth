@@ -31,12 +31,8 @@ void WavetableNote::setFrequency (float frequency)
     {
         WavetableOscillator* newOsc = new WavetableOscillator();
         
-        newOsc->sampleRate = sampleRate;
-        newOsc->setWavetable (wavetableSamples);
-        newOsc->setPhase (phase);
-        newOsc->setRandom (random);
-        newOsc->setRandomStartIndex ();
         newOsc->setFrequency (currentFrequency);
+        newOsc->start ();
         newOsc->setAmplitude ((*blend) * scaleFactor);
 
         voices.push_back (*newOsc);
@@ -78,33 +74,6 @@ void WavetableNote::setBlend (std::atomic<float>* blend)
     this->blend = blend;
 }
 
-void WavetableNote::setPhase (std::atomic<float>* phase)
-{
-    this->phase = phase;
-    for (auto& voice : voices)
-    {
-        voice.setPhase (phase);
-    }
-}
-
-void WavetableNote::setRandom (std::atomic<float>* random)
-{
-    this->random = random;
-    for (auto& voice : voices)
-    {
-        voice.setRandom (random);
-    }
-}
-
-void WavetableNote::setWavetable (std::vector<float>* wavetableSamples)
-{
-    this->wavetableSamples = wavetableSamples;
-    for (auto& voice : voices)
-    {
-        voice.setWavetable (wavetableSamples);
-    }
-}
-
 float WavetableNote::getSample ()
 {
     float currentSample = 0;
@@ -112,7 +81,7 @@ float WavetableNote::getSample ()
     {
         if (voice.isPlaying())
         {
-            currentSample += voice.getSample ();
+            currentSample += voice.getNextSample ();
         }
     }
 

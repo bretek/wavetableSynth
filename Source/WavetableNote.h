@@ -24,9 +24,6 @@ public:
     void setNumVoices (std::atomic<float>* numVoices);
     void setDetune (std::atomic<float>* detune);
     void setBlend (std::atomic<float>* blend);
-    void setPhase (std::atomic<float>* phase);
-    void setRandom (std::atomic<float>* random);
-    void setWavetable (std::vector<float>* wavetableSamples);
     float getSample ();
     void stop ();
     bool isPlaying ();
