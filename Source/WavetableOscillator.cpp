@@ -13,7 +13,7 @@
 WavetableOscillator::WavetableOscillator ()
 {
     //initWavetableSin ();
-    initWavetableSaw ();
+    initWavetableSin ();
 
     std::srand (std::time (nullptr));
 }

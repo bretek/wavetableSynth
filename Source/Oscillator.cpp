@@ -83,7 +83,6 @@ Oscillator::Oscillator()
     }
 
     // WT editor
-    wtEditor.setSize (500, 300);
     wtEditor.setColour (juce::ResizableWindow::backgroundColourId, juce::Colours::red);
     addAndMakeVisible (&wtEditor);
 
@@ -232,7 +231,7 @@ void Oscillator::resized()
 
     bottomControlRow.performLayout (getLocalBounds());
 
-    verticalLayout.items.add (juce::FlexItem (titleBar).withFlex (1.5f));
+    verticalLayout.items.add (juce::FlexItem (titleBar).withFlex (1.2f));
     verticalLayout.items.add (juce::FlexItem ().withFlex (0.4f));
     verticalLayout.items.add (juce::FlexItem (wtComponent).withFlex (10.0f));
     verticalLayout.items.add (juce::FlexItem (topControlRow).withFlex (4.0f));

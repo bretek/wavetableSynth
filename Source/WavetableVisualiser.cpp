@@ -15,7 +15,7 @@
 WavetableVisualiser::WavetableVisualiser()
 {
     this->setLookAndFeel (&serumLookAndFeel);
-    initWavetableSaw ();
+    initWavetableSin ();
 }
 
 WavetableVisualiser::~WavetableVisualiser()

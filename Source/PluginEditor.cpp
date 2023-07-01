@@ -15,7 +15,7 @@ SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p, ju
     valueTreeState (vts)
 {
     this->setLookAndFeel (&serumLookAndFeel);
-    setSize (540, 620);
+    setSize (450, 580);
     setResizable (true, true);
 
     osc1.attachPitchControls (valueTreeState);

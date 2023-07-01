@@ -2,8 +2,8 @@
 
 <JUCERPROJECT id="cCP9FW" name="Serum" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              companyName="Mad Audio" pluginFormats="buildStandalone" pluginVST3Category="Instrument"
-              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
+              companyName="Mad Audio" pluginFormats="buildStandalone,buildVST3"
+              pluginVST3Category="Instrument" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="ZxLqFj" name="Serum">
     <GROUP id="{41E398DE-84D4-2EC1-268B-DFCB78E9F34B}" name="Assets">
       <FILE id="nyI8Rp" name="Seravek Basic.ttf" compile="0" resource="1"
