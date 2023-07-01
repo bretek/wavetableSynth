@@ -26,6 +26,7 @@ public:
     void setBlend (std::atomic<float>* blend);
     void setPhase (std::atomic<float>* phase);
     void setRandom (std::atomic<float>* random);
+    void setWavetable (std::vector<float>* wavetableSamples);
     float getSample ();
     void stop ();
     bool isPlaying ();
@@ -33,6 +34,8 @@ public:
     double sampleRate;
 private:
     std::vector<WavetableOscillator> voices;
+
+    std::vector<float>* wavetableSamples;
 
     float frequency = 0.f;
     std::atomic<float>* numVoices;

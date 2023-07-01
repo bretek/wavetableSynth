@@ -20,7 +20,7 @@
 class SerumAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    SerumAudioProcessorEditor (SerumAudioProcessor&, juce::AudioProcessorValueTreeState& valueTreeState);
+    SerumAudioProcessorEditor (SerumAudioProcessor&, juce::AudioProcessorValueTreeState& valueTreeState, std::vector<float>* wt);
     ~SerumAudioProcessorEditor() override;
 
     //==============================================================================
@@ -37,6 +37,7 @@ private:
     SerumLookAndFeel serumLookAndFeel;
 
     juce::AudioProcessorValueTreeState& valueTreeState;
+    std::vector<float>* wavetable;
 
     Oscillator osc1;
 

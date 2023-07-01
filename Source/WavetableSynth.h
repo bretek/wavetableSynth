@@ -17,6 +17,7 @@
 #include "WavetableNote.h"
 
 #define NUM_NOTES 128
+#define WAVETABLE_LENGTH 2048
 
 class WavetableSynth
 {
@@ -33,9 +34,15 @@ public:
     void setRandom (std::atomic<float>* random);
     void setPan (std::atomic<float>* pan);
     void setLevel (std::atomic<float>* level);
+
+    std::vector<float> wavetableSamples;
 private:
     void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
     void handleMidi (juce::MidiMessage& message);
+
+    void initWavetableSin ();
+    void initWavetableSaw ();
+    void initWavetableSquare ();
 
     std::vector<WavetableNote> notes;
     double sampleRate;

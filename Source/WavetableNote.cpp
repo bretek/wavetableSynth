@@ -32,6 +32,7 @@ void WavetableNote::setFrequency (float frequency)
         WavetableOscillator* newOsc = new WavetableOscillator();
         
         newOsc->sampleRate = sampleRate;
+        newOsc->setWavetable (wavetableSamples);
         newOsc->setPhase (phase);
         newOsc->setRandom (random);
         newOsc->setRandomStartIndex ();
@@ -92,6 +93,15 @@ void WavetableNote::setRandom (std::atomic<float>* random)
     for (auto& voice : voices)
     {
         voice.setRandom (random);
+    }
+}
+
+void WavetableNote::setWavetable (std::vector<float>* wavetableSamples)
+{
+    this->wavetableSamples = wavetableSamples;
+    for (auto& voice : voices)
+    {
+        voice.setWavetable (wavetableSamples);
     }
 }
 

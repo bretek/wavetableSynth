@@ -227,7 +227,7 @@ bool SerumAudioProcessor::hasEditor() const
 
 juce::AudioProcessorEditor* SerumAudioProcessor::createEditor()
 {
-    return new SerumAudioProcessorEditor (*this, parameters);
+    return new SerumAudioProcessorEditor (*this, parameters, &(wavetableSynth.wavetableSamples));
 }
 
 //==============================================================================

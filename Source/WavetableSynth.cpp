@@ -14,12 +14,15 @@ void WavetableSynth::prepareToPlay (double sampleRate)
 {
     this->sampleRate = sampleRate;
 
+    initWavetableSquare ();
+
     notes.clear();
 
     for (int note = 0; note < NUM_NOTES; ++note)
     {
         WavetableNote* newNote = new WavetableNote();
         newNote->sampleRate = sampleRate;
+        newNote->setWavetable (&wavetableSamples);
         notes.push_back (*newNote);
     }
 }
@@ -153,5 +156,43 @@ void WavetableSynth::handleMidi (juce::MidiMessage& message)
     else if (message.isNoteOff())
     {
         notes[message.getNoteNumber()].stop();
+    }
+}
+
+void WavetableSynth::initWavetableSin ()
+{
+    wavetableSamples.resize (WAVETABLE_LENGTH);
+    for (int sample = 0; sample < WAVETABLE_LENGTH; ++sample)
+    {
+        wavetableSamples[sample] = std::sin ((((float)sample / WAVETABLE_LENGTH)) * juce::MathConstants<float>::twoPi);
+    }
+}
+
+void WavetableSynth::initWavetableSaw ()
+{
+    wavetableSamples.resize (WAVETABLE_LENGTH);
+    float currentSampleValue = 0;
+    float sampleValueDifference = 2.f / static_cast<float>(WAVETABLE_LENGTH-1);
+    for (int sample = 0; sample < WAVETABLE_LENGTH; ++sample)
+    {
+        wavetableSamples[sample] = currentSampleValue;
+        currentSampleValue += sampleValueDifference;
+        if (currentSampleValue > 1.f)
+        {
+            currentSampleValue -= 2.f;
+        }
+    }
+}
+
+void WavetableSynth::initWavetableSquare ()
+{
+    wavetableSamples.resize (WAVETABLE_LENGTH);
+    for (int sample = 0; sample < WAVETABLE_LENGTH / 2; ++sample)
+    {
+        wavetableSamples[sample] = 1.f;
+    }
+    for (int sample = WAVETABLE_LENGTH / 2; sample < WAVETABLE_LENGTH; ++sample)
+    {
+        wavetableSamples[sample] = -1.f;
     }
 }

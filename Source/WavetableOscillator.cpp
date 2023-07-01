@@ -12,33 +12,7 @@
 
 WavetableOscillator::WavetableOscillator ()
 {
-    //initWavetableSin ();
-    initWavetableSin ();
-
     std::srand (std::time (nullptr));
-}
-
-void WavetableOscillator::initWavetableSin ()
-{
-    for (int sample = 0; sample < WAVETABLE_LENGTH; ++sample)
-    {
-        samples[sample] = std::sin ((((float)sample / WAVETABLE_LENGTH)) * juce::MathConstants<float>::twoPi);
-    }
-}
-
-void WavetableOscillator::initWavetableSaw ()
-{
-    float currentSampleValue = 0;
-    float sampleValueDifference = 2.f / static_cast<float>(WAVETABLE_LENGTH-1);
-    for (int sample = 0; sample < WAVETABLE_LENGTH; ++sample)
-    {
-        samples[sample] = currentSampleValue;
-        currentSampleValue += sampleValueDifference;
-        if (currentSampleValue > 1.f)
-        {
-            currentSampleValue -= 2.f;
-        }
-    }
 }
 
 void WavetableOscillator::setFrequency (float frequency)
@@ -61,11 +35,16 @@ void WavetableOscillator::setRandom (std::atomic<float>* random)
     this->random = random;
 }
 
+void WavetableOscillator::setWavetable (std::vector<float>* wavetableSamples)
+{
+    samples = wavetableSamples;
+}
+
 float WavetableOscillator::getSample ()
 {
     const int floorIndex = std::fmod(currentSampleIndex, static_cast<float>(WAVETABLE_LENGTH));
-    const float sample = ((currentSampleIndex - floorIndex) * samples[floorIndex + 1]) +
-            ((floorIndex + 1 - currentSampleIndex) * samples[floorIndex]);
+    const float sample = ((currentSampleIndex - floorIndex) * (*samples)[floorIndex + 1]) +
+            ((floorIndex + 1 - currentSampleIndex) * (*samples)[floorIndex]);
     currentSampleIndex += sampleIndexIncrement;
 
     if (currentSampleIndex >= WAVETABLE_LENGTH - 1)

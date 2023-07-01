@@ -22,11 +22,10 @@ class WavetableOscillator
 {
 public:
     WavetableOscillator ();
-    void initWavetableSin ();
-    void initWavetableSaw ();
 
     void setFrequency (float frequency);
     void setAmplitude (float amplitude);
+    void setWavetable (std::vector<float>* wavetableSamples);
 
     void setPhase (std::atomic<float>* phase);
     void setRandom (std::atomic<float>* random);
@@ -43,7 +42,7 @@ private:
 
     float calculateRandomStartSample (float phase, float random);
 
-    float samples[WAVETABLE_LENGTH];
+    std::vector<float>* samples;
 
     float sampleIndexIncrement = 0.f;
     float currentSampleIndex = 0.f;

@@ -83,7 +83,6 @@ Oscillator::Oscillator()
     }
 
     // WT editor
-    wtEditor.setColour (juce::ResizableWindow::backgroundColourId, juce::Colours::red);
     addAndMakeVisible (&wtEditor);
 
     // WT Controls
@@ -350,4 +349,9 @@ juce::FlexBox Oscillator::layoutSliderControls (juce::Label& label, juce::Slider
     box.performLayout (getLocalBounds());
 
     return box;
+}
+
+void Oscillator::setWavetable (std::vector<float>* wavetable)
+{
+    wtEditor.setWavetable (wavetable);
 }

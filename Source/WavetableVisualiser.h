@@ -14,8 +14,6 @@
 
 #include "SerumLookAndFeel.h"
 
-#define WAVETABLE_LENGTH 2048
-
 //==============================================================================
 /*
 */
@@ -28,12 +26,12 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    void setWavetable (std::vector<float>* wavetableSamples);
+
 private:
     juce::Point<int> sampleToPixelPoint (float sampleValue, int sampleNum);
-    void initWavetableSin ();
-    void initWavetableSaw ();
 
-    float samples[WAVETABLE_LENGTH];
+    std::vector<float>* samples;
 
     SerumLookAndFeel serumLookAndFeel;
 

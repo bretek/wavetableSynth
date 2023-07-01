@@ -37,6 +37,8 @@ public:
     void attachPanControl (juce::AudioProcessorValueTreeState& vts);
     void attachLevelControl (juce::AudioProcessorValueTreeState& vts);
 
+    void setWavetable (std::vector<float>* wavetable);
+
     typedef juce::AudioProcessorValueTreeState::SliderAttachment SliderAttachment;
 private:
     // looks and feels

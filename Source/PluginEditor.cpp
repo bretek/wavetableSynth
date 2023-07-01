@@ -10,9 +10,10 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p, juce::AudioProcessorValueTreeState& vts)
+SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p, juce::AudioProcessorValueTreeState& vts, std::vector<float>* wt)
     : AudioProcessorEditor (&p), audioProcessor (p),
-    valueTreeState (vts)
+    valueTreeState (vts),
+    wavetable (wt)
 {
     this->setLookAndFeel (&serumLookAndFeel);
     setSize (450, 580);
@@ -27,6 +28,8 @@ SerumAudioProcessorEditor::SerumAudioProcessorEditor (SerumAudioProcessor& p, ju
     osc1.attachRandomControl (valueTreeState);
     osc1.attachPanControl (valueTreeState);
     osc1.attachLevelControl (valueTreeState);
+
+    osc1.setWavetable (wavetable);
 
     addAndMakeVisible (osc1);
 }
