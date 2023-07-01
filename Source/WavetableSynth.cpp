@@ -25,7 +25,6 @@ void WavetableSynth::prepareToPlay (double sampleRate)
     for (int note = 0; note < NUM_NOTES; ++note)
     {
         WavetableNote* newNote = new WavetableNote();
-        newNote->sampleRate = sampleRate;
         notes.push_back (*newNote);
     }
 }
@@ -78,31 +77,6 @@ void WavetableSynth::setPitchControls (std::atomic<float>* octave, std::atomic<f
     coarsePitch = coarse;
 }
 
-void WavetableSynth::setUnison (std::atomic<float>* numVoices)
-{
-    //for (auto& note : notes)
-    for (int i = 0; i < notes.size(); ++i)
-    {
-        notes[i].setNumVoices (numVoices);
-    }
-}
-
-void WavetableSynth::setDetune (std::atomic<float>* detune)
-{
-    for (int i = 0; i < notes.size(); ++i)
-    {
-        notes[i].setDetune (detune);
-    }
-}
-
-void WavetableSynth::setBlend (std::atomic<float>* blend)
-{
-    for (int i = 0; i < notes.size(); ++i)
-    {
-        notes[i].setBlend (blend);
-    }
-}
-
 void WavetableSynth::setPan (std::atomic<float>* pan)
 {
     this->pan = pan;
@@ -139,6 +113,7 @@ void WavetableSynth::handleMidi (juce::MidiMessage& message)
         frequency *= std::pow(2, (static_cast<float>((*octaveOffset) * 12) + static_cast<float>((*semiOffset)) + (*fineOffset) + (*coarsePitch)) / 12.f);
 
         notes[message.getNoteNumber()].setFrequency (frequency);
+        notes[message.getNoteNumber()].start();
     }
     else if (message.isNoteOff())
     {

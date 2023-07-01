@@ -86,9 +86,6 @@ SerumAudioProcessor::SerumAudioProcessor()
     wavetableSynthParameters->panParameter = parameters.getRawParameterValue ("pan");
     wavetableSynthParameters->levelParameter = parameters.getRawParameterValue ("level");
 
-    wavetableSynth.setUnison (wavetableSynthParameters->unisonParameter);
-    wavetableSynth.setDetune (wavetableSynthParameters->detuneParameter);
-    wavetableSynth.setBlend (wavetableSynthParameters->blendParameter);
     wavetableSynth.setPan (wavetableSynthParameters->panParameter);
     wavetableSynth.setLevel (wavetableSynthParameters->levelParameter);
 }
@@ -169,9 +166,6 @@ void SerumAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
                                     wavetableSynthParameters->fineParameter, 
                                     wavetableSynthParameters->coarseParameter);
 
-    wavetableSynth.setUnison (wavetableSynthParameters->unisonParameter);
-    wavetableSynth.setDetune (wavetableSynthParameters->detuneParameter);
-    wavetableSynth.setBlend (wavetableSynthParameters->blendParameter);
     wavetableSynth.setPan (wavetableSynthParameters->panParameter);
     wavetableSynth.setLevel (wavetableSynthParameters->levelParameter);
 }

@@ -10,6 +10,15 @@
 
 #include "WavetableNote.h"
 
+WavetableNote::WavetableNote ()
+{
+    extern struct WavetableSynthParameters wavetableSynthParametersExt;
+    wavetableSynthParameters = &wavetableSynthParametersExt;
+    numVoices = wavetableSynthParameters->unisonParameter;
+    detune = wavetableSynthParameters->detuneParameter;
+    blend = wavetableSynthParameters->blendParameter;
+}
+
 void WavetableNote::setFrequency (float frequency)
 {
     voices.clear();
@@ -32,8 +41,8 @@ void WavetableNote::setFrequency (float frequency)
         WavetableOscillator* newOsc = new WavetableOscillator();
         
         newOsc->setFrequency (currentFrequency);
-        newOsc->start ();
         newOsc->setAmplitude ((*blend) * scaleFactor);
+        newOsc->start ();
 
         voices.push_back (*newOsc);
         currentFrequency += (*detune);
@@ -59,21 +68,6 @@ void WavetableNote::setAmplitude (float amplitude)
     this->amplitude = amplitude;
 }
 
-void WavetableNote::setNumVoices (std::atomic<float>* numVoices)
-{
-    this->numVoices = numVoices;
-}
-
-void WavetableNote::setDetune (std::atomic<float>* detune)
-{
-    this->detune = detune;
-}
-
-void WavetableNote::setBlend (std::atomic<float>* blend)
-{
-    this->blend = blend;
-}
-
 float WavetableNote::getSample ()
 {
     float currentSample = 0;
@@ -88,16 +82,25 @@ float WavetableNote::getSample ()
     return currentSample;
 }
 
+void WavetableNote::start ()
+{
+    playing = true;
+    for (auto& voice : voices)
+    {
+        voice.start();
+    }
+}
+
 void WavetableNote::stop ()
 {
-    frequency = 0.f;
+    playing = false;
     for (auto& voice : voices)
     {
         voice.stop();
     }
 }
 
-bool WavetableNote::isPlaying ()
+bool WavetableNote::isPlaying () const
 {
-    return frequency != 0.f;
+    return playing;
 }

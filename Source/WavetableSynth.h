@@ -28,11 +28,6 @@ public:
 
     void setPitchControls (std::atomic<float>* octave, std::atomic<float>* semi, std::atomic<float>* fine, std::atomic<float>* coarse);
 
-    void setUnison (std::atomic<float>* numVoices);
-    void setDetune (std::atomic<float>* detune);
-    void setBlend (std::atomic<float>* blend);
-    void setPhase (std::atomic<float>* phase);
-    void setRandom (std::atomic<float>* random);
     void setPan (std::atomic<float>* pan);
     void setLevel (std::atomic<float>* level);
 
