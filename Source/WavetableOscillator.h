@@ -16,6 +16,8 @@
 
 #include "WavetableSynthParameters.h"
 
+#define SINC_KERNEL_SIZE 5
+
 class WavetableOscillator
 {
 public:
@@ -32,7 +34,8 @@ public:
     void stop ();
 
 private:
-    inline float interpolateSamples (std::vector<float> samples, float index) const;
+    inline float lanczosKernel (float x) const;
+    inline float sincInterpolateSamples (float index) const;
     inline float calculateSampleIndexIncrement (float frequency) const;
     inline float calculateRandomStartSample (float phase, float random) const;
 

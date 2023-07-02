@@ -40,11 +40,11 @@ void WavetableOscillator::setPan (float pan)
 
 float WavetableOscillator::getNextSample ()
 {
-    const int floorIndex = std::fmod(currentSampleIndex, static_cast<float>(wavetableSamples->size()));
-    const float sample = ((currentSampleIndex - floorIndex) * (*wavetableSamples)[floorIndex + 1]) +
-            ((floorIndex + 1 - currentSampleIndex) * (*wavetableSamples)[floorIndex]);
+    const float sample = sincInterpolateSamples (currentSampleIndex);
+
     currentSampleIndex += sampleIndexIncrement;
 
+    // loop back to beginning
     if (currentSampleIndex >= wavetableSamples->size() - 1)
     {
         currentSampleIndex -= static_cast<float>(wavetableSamples->size() - 1);
@@ -67,6 +67,41 @@ void WavetableOscillator::start ()
 void WavetableOscillator::stop ()
 {
     playing = false;
+}
+
+inline float WavetableOscillator::lanczosKernel (float x) const
+{
+    static const float piSquared = std::pow(juce::MathConstants<float>::pi, 2);
+    if (x == 0)
+    {
+        return 1.f;
+    }
+    if (x >= -SINC_KERNEL_SIZE && x < SINC_KERNEL_SIZE)
+    {
+        float top = SINC_KERNEL_SIZE * std::sin (juce::MathConstants<float>::pi * x) * std::sin ((juce::MathConstants<float>::pi * x) / SINC_KERNEL_SIZE);
+        float bottom = piSquared * std::pow(x, 2);
+        return (top / bottom);
+    }
+    else
+    {
+        return 0.f;
+    }
+}
+
+inline float WavetableOscillator::sincInterpolateSamples (float index) const
+{
+    float sampleValue = 0;
+
+    int floorX = std::floor(index);
+
+    for (int i = floorX - SINC_KERNEL_SIZE + 1; i <= floorX + SINC_KERNEL_SIZE; ++i)
+    {
+        int sampleIndex = (i + wavetableSamples->size()) % wavetableSamples->size();
+        float sincVal = (*wavetableSamples)[sampleIndex] * lanczosKernel (index - i);
+        sampleValue += sincVal;
+    }
+
+    return sampleValue;
 }
 
 inline float WavetableOscillator::calculateSampleIndexIncrement (float frequency) const
