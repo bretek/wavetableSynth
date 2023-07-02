@@ -24,9 +24,6 @@ public:
     WavetableOscillator ();
 
     void setFrequency (float frequency);
-    void setAmplitude (float amplitude);
-    void setPan (float pan);
-
     float getNextSample ();
 
     bool isPlaying () const;
@@ -48,8 +45,6 @@ private:
     std::atomic<float>* random;
 
     float frequency = 0.f;
-    float amplitude = 1.f;
-    float pan = 0.5f;
 
     float sampleIndexIncrement = 0.f;
     float currentSampleIndex = 0.f;

@@ -28,16 +28,6 @@ void WavetableOscillator::setFrequency (float frequency)
     sampleIndexIncrement = calculateSampleIndexIncrement (frequency);
 }
 
-void WavetableOscillator::setAmplitude (float amplitude)
-{
-    this->amplitude = amplitude;
-}
-
-void WavetableOscillator::setPan (float pan)
-{
-    this-> pan = pan;
-}
-
 float WavetableOscillator::getNextSample ()
 {
     const float sample = sincInterpolateSamples (currentSampleIndex);
@@ -50,7 +40,7 @@ float WavetableOscillator::getNextSample ()
         currentSampleIndex -= static_cast<float>(wavetableSamples->size() - 1);
     }
 
-    return sample * amplitude;
+    return sample;
 }
 
 bool WavetableOscillator::isPlaying () const
