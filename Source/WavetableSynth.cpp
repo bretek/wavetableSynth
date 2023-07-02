@@ -10,15 +10,28 @@
 
 #include "WavetableSynth.h"
 
+WavetableSynth::WavetableSynth ()
+{
+
+}
+
 void WavetableSynth::prepareToPlay (double sampleRate)
 {
     this->sampleRate = sampleRate;
 
-    initWavetableSquare ();
+    initWavetableSaw ();
     extern struct WavetableSynthParameters wavetableSynthParametersExt;
     wavetableSynthParameters = &wavetableSynthParametersExt;
     wavetableSynthParameters->wavetableSamples = &wavetableSamples;
     wavetableSynthParameters->sampleRate = &this->sampleRate;
+
+    octaveOffset = wavetableSynthParameters->octaveParameter;
+    semiOffset = wavetableSynthParameters->semiParameter;
+    fineOffset = wavetableSynthParameters->fineParameter;
+    coarsePitch = wavetableSynthParameters->coarseParameter;
+
+    pan = wavetableSynthParameters->panParameter;
+    level = wavetableSynthParameters->levelParameter;
 
     notes.clear();
 
@@ -67,24 +80,6 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
             channel[sample] *= gainFactor;
         }
     }
-}
-
-void WavetableSynth::setPitchControls (std::atomic<float>* octave, std::atomic<float>* semi, std::atomic<float>* fine, std::atomic<float>* coarse)
-{
-    octaveOffset = octave;
-    semiOffset = semi;
-    fineOffset = fine;
-    coarsePitch = coarse;
-}
-
-void WavetableSynth::setPan (std::atomic<float>* pan)
-{
-    this->pan = pan;
-}
-
-void WavetableSynth::setLevel (std::atomic<float>* level)
-{
-    this->level = level;
 }
 
 void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample)

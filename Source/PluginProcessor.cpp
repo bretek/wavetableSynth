@@ -85,9 +85,6 @@ SerumAudioProcessor::SerumAudioProcessor()
     wavetableSynthParameters->randomParameter = parameters.getRawParameterValue ("random");
     wavetableSynthParameters->panParameter = parameters.getRawParameterValue ("pan");
     wavetableSynthParameters->levelParameter = parameters.getRawParameterValue ("level");
-
-    wavetableSynth.setPan (wavetableSynthParameters->panParameter);
-    wavetableSynth.setLevel (wavetableSynthParameters->levelParameter);
 }
 
 SerumAudioProcessor::~SerumAudioProcessor()
@@ -160,14 +157,6 @@ void SerumAudioProcessor::changeProgramName (int index, const juce::String& newN
 void SerumAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     wavetableSynth.prepareToPlay (sampleRate);
-
-    wavetableSynth.setPitchControls (wavetableSynthParameters->octaveParameter, 
-                                    wavetableSynthParameters->semiParameter, 
-                                    wavetableSynthParameters->fineParameter, 
-                                    wavetableSynthParameters->coarseParameter);
-
-    wavetableSynth.setPan (wavetableSynthParameters->panParameter);
-    wavetableSynth.setLevel (wavetableSynthParameters->levelParameter);
 }
 
 void SerumAudioProcessor::releaseResources()

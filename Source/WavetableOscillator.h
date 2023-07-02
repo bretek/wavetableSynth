@@ -32,9 +32,9 @@ public:
     void stop ();
 
 private:
-    float interpolateSamples (std::vector<float> samples, float index) const;
-    float calculateSampleIndexIncrement (float frequency) const;
-    float calculateRandomStartSample (float phase, float random) const;
+    inline float interpolateSamples (std::vector<float> samples, float index) const;
+    inline float calculateSampleIndexIncrement (float frequency) const;
+    inline float calculateRandomStartSample (float phase, float random) const;
 
     WavetableSynthParameters* wavetableSynthParameters;
 

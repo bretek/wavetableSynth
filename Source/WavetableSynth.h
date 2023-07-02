@@ -23,13 +23,9 @@
 class WavetableSynth
 {
 public:
+    WavetableSynth ();
     void prepareToPlay (double sampleRate);
     void processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer&);
-
-    void setPitchControls (std::atomic<float>* octave, std::atomic<float>* semi, std::atomic<float>* fine, std::atomic<float>* coarse);
-
-    void setPan (std::atomic<float>* pan);
-    void setLevel (std::atomic<float>* level);
 
     std::vector<float> wavetableSamples;
 private:
@@ -42,16 +38,16 @@ private:
 
     WavetableSynthParameters* wavetableSynthParameters;
 
-    std::vector<WavetableNote> notes;
     double sampleRate;
-
-    std::atomic<float>* level;
-    std::atomic<float>* pan;
-
-    float amplitude = 1.f;
 
     std::atomic<float>* octaveOffset;
     std::atomic<float>* semiOffset;
     std::atomic<float>* fineOffset;
     std::atomic<float>* coarsePitch;
+    std::atomic<float>* level;
+    std::atomic<float>* pan;
+
+    std::vector<WavetableNote> notes;
+
+    float amplitude = 1.f;
 };

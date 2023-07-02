@@ -69,12 +69,12 @@ void WavetableOscillator::stop ()
     playing = false;
 }
 
-float WavetableOscillator::calculateSampleIndexIncrement (float frequency) const
+inline float WavetableOscillator::calculateSampleIndexIncrement (float frequency) const
 {
     return (frequency * static_cast<float>(wavetableSamples->size())) / (float)(*sampleRate);
 }
 
-float WavetableOscillator::calculateRandomStartSample (float phase, float random) const
+inline float WavetableOscillator::calculateRandomStartSample (float phase, float random) const
 {
     float randPhase = (((std::rand() % wavetableSamples->size()) * random) + ((wavetableSamples->size() * (phase - random)) / 2));
     randPhase = (static_cast<int>(randPhase) + wavetableSamples->size()) % wavetableSamples->size();
