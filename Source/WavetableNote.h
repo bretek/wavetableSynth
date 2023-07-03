@@ -23,7 +23,9 @@ public:
     void setFrequency (float frequency);
     void setAmplitude (float amplitude);
 
-    float getSample ();
+    void updateUnison ();
+
+    void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
 
     bool isPlaying () const;
     void start ();
@@ -36,8 +38,13 @@ private:
     std::atomic<float>* numVoices;
     std::atomic<float>* detune;
     std::atomic<float>* blend;
+    std::atomic<float>* level;
 
     std::vector<WavetableOscillator> voices;
+
+    std::vector<float> voiceFrequencyValues;
+    std::vector<float> voiceAmplitudeValues;
+    std::vector<float> voicePanValues;
 
     float frequency = 0.f;
     float amplitude;

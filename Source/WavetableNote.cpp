@@ -17,73 +17,113 @@ WavetableNote::WavetableNote ()
     numVoices = wavetableSynthParameters->unisonParameter;
     detune = wavetableSynthParameters->detuneParameter;
     blend = wavetableSynthParameters->blendParameter;
+    level = wavetableSynthParameters->levelParameter;
 }
 
 void WavetableNote::setFrequency (float frequency)
 {
-    voices.clear();
-
-    float currentFrequency = frequency - (((static_cast<int>(*numVoices)-1) / 2) * (*detune));
-
-    // keep total level at one during blend
-    float scaleFactor;
-    if (static_cast<int>(*numVoices) % 2 == 0)
-    {
-        scaleFactor = 2.f / (2.f + (((*numVoices) - 2.f) * (*blend)));
-    }
-    else
-    {
-        scaleFactor = 1.f / (1.f + (((*numVoices) - 1.f) * (*blend)));
-    }
-
-    for (int voice = 0; voice < static_cast<int>(*numVoices); ++voice)
-    {
-        WavetableOscillator* newOsc = new WavetableOscillator();
-        
-        newOsc->setFrequency (currentFrequency);
-        newOsc->setAmplitude ((*blend) * scaleFactor);
-        newOsc->start ();
-
-        voices.push_back (*newOsc);
-        currentFrequency += (*detune);
-    }
-
-    // set centre voices louder
-    voices[(static_cast<int>(*numVoices)/2)].setAmplitude (1.f * scaleFactor);
-    if (static_cast<int>(*numVoices) % 2 == 0)
-    {
-        voices[(static_cast<int>(*numVoices)/2)-1].setAmplitude (1.f * scaleFactor);
-    }
-
     this->frequency = frequency;
+
+    updateUnison ();
 }
 
 void WavetableNote::setAmplitude (float amplitude)
 {
-    if (amplitude > 1.f)
-    {
-        amplitude = 0;
-    }
-    
     this->amplitude = amplitude;
 }
 
-float WavetableNote::getSample ()
+void WavetableNote::updateUnison ()
 {
-    float currentSample = 0;
-    for (auto& voice : voices)
+    voices.clear();
+    voiceFrequencyValues.clear();
+    voiceAmplitudeValues.clear();
+    voicePanValues.clear();
+
+    // calculate detune frequencies
+    if (*numVoices == 1)
     {
-        if (voice.isPlaying())
+        voiceFrequencyValues.push_back (frequency);
+    }
+    else
+    {
+        float lowerFrequency = std::pow(2, -(*detune)/1200) * frequency;
+        const float upperFrequency = std::pow(2, (*detune)/1200) * frequency;
+        const float frequencyInterval = (upperFrequency - lowerFrequency) / static_cast<float>((*numVoices) - 1);
+
+        for (int voiceNum = 0; voiceNum < (*numVoices); ++voiceNum)
         {
-            currentSample += voice.getNextSample ();
+            voiceFrequencyValues.push_back (lowerFrequency);
+            lowerFrequency += frequencyInterval;
         }
     }
 
-    return currentSample;
+    // calculate amplitudes
+    for (int voiceNum = 0; voiceNum < (*numVoices); ++voiceNum)
+    {
+        voiceAmplitudeValues.push_back (*blend);
+    }
+    voiceAmplitudeValues[(voiceAmplitudeValues.size()/2)] = 1.f;
+    if (voiceAmplitudeValues.size() % 2 == 0)
+    {
+        voiceAmplitudeValues[((voiceAmplitudeValues.size()/2) - 1)] = 1.f;
+    }
+
+    // calculate pan values
+    if (*numVoices == 1)
+    {
+        voicePanValues.push_back (0.f);
+    }
+    else
+    {
+        float leftPan = -0.8f;
+        float rightPan = 0.8f;
+        float panInterval = (std::abs(leftPan) + std::abs(rightPan)) / static_cast<float>(*numVoices - 1);
+        for (int voiceNum = 0; voiceNum < (*numVoices); ++voiceNum)
+        {
+            voicePanValues.push_back (leftPan);
+            leftPan += panInterval;
+        }
+    }
+
+    // create voices
+    for (int voiceNum = 0; voiceNum < (*numVoices); ++voiceNum)
+    {
+        WavetableOscillator* newOsc = new WavetableOscillator();
+        newOsc->setFrequency (voiceFrequencyValues[voiceNum]);
+        voices.push_back (*newOsc);
+    }
+}
+
+void WavetableNote::renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample)
+{
+    for (int voiceNum = 0; voiceNum < voices.size(); ++voiceNum)
+    {
+        if (voices[voiceNum].isPlaying())
+        {
+            float panValue = voicePanValues[voiceNum];
+            int affectedChannel = 1;
+            int nonAffectedChannel = 0;
+            if (panValue > 0.f)
+            {
+                affectedChannel = 0;
+                nonAffectedChannel = 1;
+            }
+
+            auto* channel = buffer.getWritePointer (nonAffectedChannel);
+            auto* channel2 = buffer.getWritePointer (affectedChannel);
+
+            for (int sample = startSample; sample <= endSample; ++sample)
+            {
+                channel[sample] += (voices[voiceNum].getNextSample () * voiceAmplitudeValues[voiceNum] * (*level));
+                channel2[sample] += (voices[voiceNum].getNextSample () * voiceAmplitudeValues[voiceNum] * (*level) * (1.f - std::abs(panValue)));
+            }
+        }
+    }
 }
 
 void WavetableNote::start ()
 {
+    setFrequency (frequency);
     playing = true;
     for (auto& voice : voices)
     {

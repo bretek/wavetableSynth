@@ -44,7 +44,6 @@ void WavetableSynth::prepareToPlay (double sampleRate)
 
 void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
-    auto* channel1 = buffer.getWritePointer (0);
     int numSamples = buffer.getNumSamples ();
 
     int currentSample = 0;
@@ -60,25 +59,20 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
 
     renderAudio (buffer, currentSample, numSamples);
 
-    for (auto channel = 1; channel < buffer.getNumChannels(); ++channel)
+    auto* leftChannel = buffer.getWritePointer (0);
+    auto* rightChannel = buffer.getWritePointer (1);
+
+    float panFactor = 1.f - std::abs(*pan);
+
+    auto* affectedChannel = rightChannel;
+    if (*pan > 0.f)
     {
-        std::copy (channel1, channel1 + numSamples, buffer.getWritePointer (channel));
+        affectedChannel = leftChannel;
     }
 
-    if ((*pan) != 0.5f)
+    for (int sample = 0; sample < numSamples; ++sample)
     {
-        float gainFactor = 1.f - (2 * std::abs(0.5f - (*pan)));
-        int affectedChannel = 1;
-        if ((*pan) > 0.5f)
-        {
-            affectedChannel = 0;
-        }
-        auto* channel = buffer.getWritePointer (affectedChannel);
-
-        for (auto sample = 0; sample <= numSamples; ++sample)
-        {
-            channel[sample] *= gainFactor;
-        }
+        affectedChannel[sample] *= panFactor;
     }
 }
 
@@ -90,10 +84,7 @@ void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSam
     {
         if (notes[i].isPlaying())
         {
-            for (auto sample = startSample; sample <= endSample; ++sample)
-            {
-                channel[sample] += notes[i].getSample() * (*level);
-            }
+            notes[i].renderAudio (buffer, startSample, endSample);
         }
     }
 }
