@@ -13,7 +13,7 @@
 #include <vector>
 
 #include "WavetableOscillator.h"
-#include "WavetableSynthParameters.h"
+#include "../WavetableSynthParameters.h"
 
 class WavetableNote
 {

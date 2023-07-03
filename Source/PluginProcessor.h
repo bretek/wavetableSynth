@@ -10,8 +10,8 @@
 
 #include <JuceHeader.h>
 
-#include "WavetableSynth.h"
-#include "WavetableSynthParameters.h"
+#include "WavetableSynth/Processor/WavetableSynth.h"
+#include "WavetableSynth/WavetableSynthParameters.h"
 
 //==============================================================================
 /**

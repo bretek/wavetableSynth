@@ -12,7 +12,7 @@
 
 #include <JuceHeader.h>
 
-#include "SerumLookAndFeel.h"
+#include "../../SerumLookAndFeel.h"
 
 //==============================================================================
 /*

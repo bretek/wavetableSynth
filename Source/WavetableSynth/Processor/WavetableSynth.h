@@ -15,7 +15,7 @@
 #include <vector>
 
 #include "WavetableNote.h"
-#include "WavetableSynthParameters.h"
+#include "../WavetableSynthParameters.h"
 
 #define NUM_NOTES 128
 #define WAVETABLE_LENGTH 2048

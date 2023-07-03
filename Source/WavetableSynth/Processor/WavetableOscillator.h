@@ -14,7 +14,7 @@
 
 #include <ctime>
 
-#include "WavetableSynthParameters.h"
+#include "../WavetableSynthParameters.h"
 
 #define SINC_KERNEL_SIZE 3
 

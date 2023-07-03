@@ -12,7 +12,7 @@
 #include "PluginProcessor.h"
 
 #include "SerumLookAndFeel.h"
-#include "Oscillator.h"
+#include "WavetableSynth/Editor/Oscillator.h"
 
 //==============================================================================
 /**

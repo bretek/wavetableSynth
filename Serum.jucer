@@ -5,32 +5,34 @@
               companyName="Mad Audio" pluginFormats="buildStandalone,buildVST3"
               pluginVST3Category="Instrument" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="ZxLqFj" name="Serum">
+    <GROUP id="{D4E49909-9589-4473-7806-661A2BB9A7DA}" name="WavetableSynth">
+      <FILE id="X8rQCI" name="Oscillator.cpp" compile="1" resource="0" file="Source/WavetableSynth/Editor/Oscillator.cpp"/>
+      <FILE id="on0qY4" name="Oscillator.h" compile="0" resource="0" file="Source/WavetableSynth/Editor/Oscillator.h"/>
+      <FILE id="icrgzX" name="WavetableVisualiser.cpp" compile="1" resource="0"
+            file="Source/WavetableSynth/Editor/WavetableVisualiser.cpp"/>
+      <FILE id="mzBTiG" name="WavetableVisualiser.h" compile="0" resource="0"
+            file="Source/WavetableSynth/Editor/WavetableVisualiser.h"/>
+      <FILE id="Koyxj2" name="WavetableNote.cpp" compile="1" resource="0"
+            file="Source/WavetableSynth/Processor/WavetableNote.cpp"/>
+      <FILE id="pXJoeg" name="WavetableNote.h" compile="0" resource="0" file="Source/WavetableSynth/Processor/WavetableNote.h"/>
+      <FILE id="jZvFap" name="WavetableOscillator.cpp" compile="1" resource="0"
+            file="Source/WavetableSynth/Processor/WavetableOscillator.cpp"/>
+      <FILE id="W1Xtum" name="WavetableOscillator.h" compile="0" resource="0"
+            file="Source/WavetableSynth/Processor/WavetableOscillator.h"/>
+      <FILE id="S6tyAW" name="WavetableSynth.cpp" compile="1" resource="0"
+            file="Source/WavetableSynth/Processor/WavetableSynth.cpp"/>
+      <FILE id="oPl1Ab" name="WavetableSynth.h" compile="0" resource="0"
+            file="Source/WavetableSynth/Processor/WavetableSynth.h"/>
+      <FILE id="pTB5Jg" name="WavetableSynthParameters.cpp" compile="1" resource="0"
+            file="Source/WavetableSynth/WavetableSynthParameters.cpp"/>
+      <FILE id="pleRu7" name="WavetableSynthParameters.h" compile="0" resource="0"
+            file="Source/WavetableSynth/WavetableSynthParameters.h"/>
+    </GROUP>
     <GROUP id="{41E398DE-84D4-2EC1-268B-DFCB78E9F34B}" name="Assets">
       <FILE id="nyI8Rp" name="Seravek Basic.ttf" compile="0" resource="1"
             file="../../../Downloads/seravek (1)/Seravek Basic/Seravek Basic.ttf"/>
     </GROUP>
     <GROUP id="{D07D45AE-6E0C-21A6-64B4-64929030375C}" name="Source">
-      <FILE id="qaUlp1" name="WavetableSynthParameters.cpp" compile="1" resource="0"
-            file="Source/WavetableSynthParameters.cpp"/>
-      <FILE id="WYwkYX" name="WavetableSynthParameters.h" compile="0" resource="0"
-            file="Source/WavetableSynthParameters.h"/>
-      <FILE id="puohW4" name="WavetableVisualiser.cpp" compile="1" resource="0"
-            file="Source/WavetableVisualiser.cpp"/>
-      <FILE id="SIAQR6" name="WavetableVisualiser.h" compile="0" resource="0"
-            file="Source/WavetableVisualiser.h"/>
-      <FILE id="NNlMO8" name="WavetableNote.cpp" compile="1" resource="0"
-            file="Source/WavetableNote.cpp"/>
-      <FILE id="Fno0If" name="WavetableNote.h" compile="0" resource="0" file="Source/WavetableNote.h"/>
-      <FILE id="EYiMnN" name="WavetableOscillator.cpp" compile="1" resource="0"
-            file="Source/WavetableOscillator.cpp"/>
-      <FILE id="WIIokX" name="WavetableOscillator.h" compile="0" resource="0"
-            file="Source/WavetableOscillator.h"/>
-      <FILE id="uagMJ6" name="WavetableSynth.cpp" compile="1" resource="0"
-            file="Source/WavetableSynth.cpp"/>
-      <FILE id="aqjPU2" name="WavetableSynth.h" compile="0" resource="0"
-            file="Source/WavetableSynth.h"/>
-      <FILE id="Y34j9p" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
-      <FILE id="tuAbqS" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="wLGG0D" name="SerumLookAndFeel.cpp" compile="1" resource="0"
             file="Source/SerumLookAndFeel.cpp"/>
       <FILE id="Xc7Acb" name="SerumLookAndFeel.h" compile="0" resource="0"
