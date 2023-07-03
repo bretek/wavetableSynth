@@ -16,7 +16,7 @@
 
 #include "WavetableSynthParameters.h"
 
-#define SINC_KERNEL_SIZE 5
+#define SINC_KERNEL_SIZE 3
 
 class WavetableOscillator
 {
