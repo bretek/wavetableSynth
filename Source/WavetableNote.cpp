@@ -88,7 +88,7 @@ void WavetableNote::updateUnison ()
     // create voices
     for (int voiceNum = 0; voiceNum < (*numVoices); ++voiceNum)
     {
-        WavetableOscillator* newOsc = new WavetableOscillator();
+        std::unique_ptr<WavetableOscillator> newOsc (new WavetableOscillator());
         newOsc->setFrequency (voiceFrequencyValues[voiceNum]);
         voices.push_back (*newOsc);
     }

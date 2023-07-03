@@ -37,7 +37,7 @@ void WavetableSynth::prepareToPlay (double sampleRate)
 
     for (int note = 0; note < NUM_NOTES; ++note)
     {
-        WavetableNote* newNote = new WavetableNote();
+        std::unique_ptr<WavetableNote> newNote (new WavetableNote());
         notes.push_back (*newNote);
     }
 }
