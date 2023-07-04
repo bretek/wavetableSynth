@@ -19,17 +19,19 @@
 
 #define NUM_NOTES 128
 #define WAVETABLE_LENGTH 2048
+#define OVERSAMPLING_RATIO 4
+#define OVERSAMPLING_FACTOR 2
 
 class WavetableSynth
 {
 public:
     WavetableSynth ();
-    void prepareToPlay (double sampleRate);
+    void prepareToPlay (double sampleRate, int samplesPerBlock);
     void processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer&);
 
     std::vector<float> wavetableSamples;
 private:
-    void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
+    void renderAudio (juce::dsp::AudioBlock<float>& buffer, int startSample, int endSample);
     void panAudio (juce::AudioBuffer<float>& buffer);
     void handleMidi (juce::MidiMessage& message);
 
@@ -38,6 +40,8 @@ private:
     void initWavetableSquare ();
 
     WavetableSynthParameters* wavetableSynthParameters;
+
+    std::unique_ptr<juce::dsp::Oversampling<float>> oversampling;
 
     double sampleRate;
 

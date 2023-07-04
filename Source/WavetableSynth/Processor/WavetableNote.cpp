@@ -94,7 +94,7 @@ void WavetableNote::updateUnison ()
     }
 }
 
-void WavetableNote::renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample)
+void WavetableNote::renderAudio (juce::dsp::AudioBlock<float>& buffer, int startSample, int endSample)
 {
     for (int voiceNum = 0; voiceNum < voices.size(); ++voiceNum)
     {
@@ -111,8 +111,8 @@ void WavetableNote::renderAudio (juce::AudioBuffer<float>& buffer, int startSamp
                 sourceBuffer = 0;
             }
 
-            auto* channel = buffer.getWritePointer (sourceBuffer);
-            auto* pannedChannel = buffer.getWritePointer (destBuffer);
+            auto* channel = buffer.getChannelPointer (sourceBuffer);
+            auto* pannedChannel = buffer.getChannelPointer (destBuffer);
 
             for (int sample = startSample; sample <= endSample; ++sample)
             {

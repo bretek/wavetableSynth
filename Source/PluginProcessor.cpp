@@ -156,7 +156,7 @@ void SerumAudioProcessor::changeProgramName (int index, const juce::String& newN
 //==============================================================================
 void SerumAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    wavetableSynth.prepareToPlay (sampleRate);
+    wavetableSynth.prepareToPlay (sampleRate, samplesPerBlock);
 }
 
 void SerumAudioProcessor::releaseResources()

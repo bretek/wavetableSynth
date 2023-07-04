@@ -12,12 +12,14 @@
 
 WavetableSynth::WavetableSynth ()
 {
-
+    oversampling.reset (new juce::dsp::Oversampling<float> (2, OVERSAMPLING_FACTOR, juce::dsp::Oversampling<float>::filterHalfBandFIREquiripple, false));
 }
 
-void WavetableSynth::prepareToPlay (double sampleRate)
+void WavetableSynth::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    this->sampleRate = sampleRate;
+    this->sampleRate = sampleRate * OVERSAMPLING_RATIO;
+
+    oversampling->initProcessing (static_cast<size_t> (samplesPerBlock));
 
     initWavetableSaw ();
     extern struct WavetableSynthParameters wavetableSynthParametersExt;
@@ -48,21 +50,26 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
 
     int currentSample = 0;
 
+    juce::dsp::AudioBlock<float> targetBlock = juce::dsp::AudioBlock<float> (buffer);
+    juce::dsp::AudioBlock<float> upsampledBlock = oversampling->processSamplesUp (targetBlock);
+
     for (const auto midiData : midiMessages)
     {
         auto midiMessage = midiData.getMessage();
-        int midiTime = midiMessage.getTimeStamp();
-        renderAudio (buffer, currentSample, midiTime);
+        int midiTime = midiMessage.getTimeStamp() * OVERSAMPLING_RATIO;
+        renderAudio (upsampledBlock, currentSample*OVERSAMPLING_RATIO, midiTime);
         currentSample = midiTime;
         handleMidi (midiMessage);
     }
 
-    renderAudio (buffer, currentSample, numSamples);
+    renderAudio (upsampledBlock, currentSample*OVERSAMPLING_RATIO, numSamples*OVERSAMPLING_RATIO);
+
+    oversampling->processSamplesDown (targetBlock);
 
     panAudio (buffer);
 }
 
-void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample)
+void WavetableSynth::renderAudio (juce::dsp::AudioBlock<float>& buffer, int startSample, int endSample)
 {
     for (int i = 0; i < notes.size(); ++i)
     {

@@ -25,7 +25,7 @@ public:
 
     void updateUnison ();
 
-    void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
+    void renderAudio (juce::dsp::AudioBlock<float>& buffer, int startSample, int endSample);
 
     bool isPlaying () const;
     void start ();
