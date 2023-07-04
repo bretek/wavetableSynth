@@ -52,7 +52,7 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
     {
         auto midiMessage = midiData.getMessage();
         int midiTime = midiMessage.getTimeStamp();
-        renderAudio (buffer, currentSample, currentSample + midiTime);
+        renderAudio (buffer, currentSample, midiTime);
         currentSample = midiTime;
         handleMidi (midiMessage);
     }
