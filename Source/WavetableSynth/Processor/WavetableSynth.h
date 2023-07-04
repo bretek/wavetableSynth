@@ -30,6 +30,7 @@ public:
     std::vector<float> wavetableSamples;
 private:
     void renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample);
+    void panAudio (juce::AudioBuffer<float>& buffer);
     void handleMidi (juce::MidiMessage& message);
 
     void initWavetableSin ();

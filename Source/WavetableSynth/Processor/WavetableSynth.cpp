@@ -59,27 +59,11 @@ void WavetableSynth::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiB
 
     renderAudio (buffer, currentSample, numSamples);
 
-    auto* leftChannel = buffer.getWritePointer (0);
-    auto* rightChannel = buffer.getWritePointer (1);
-
-    float panFactor = 1.f - std::abs(*pan);
-
-    auto* affectedChannel = rightChannel;
-    if (*pan > 0.f)
-    {
-        affectedChannel = leftChannel;
-    }
-
-    for (int sample = 0; sample < numSamples; ++sample)
-    {
-        affectedChannel[sample] *= panFactor;
-    }
+    panAudio (buffer);
 }
 
 void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSample, int endSample)
 {
-    auto channel = buffer.getWritePointer (0);
-    
     for (int i = 0; i < notes.size(); ++i)
     {
         if (notes[i].isPlaying())
@@ -87,6 +71,21 @@ void WavetableSynth::renderAudio (juce::AudioBuffer<float>& buffer, int startSam
             notes[i].renderAudio (buffer, startSample, endSample);
         }
     }
+}
+
+void WavetableSynth::panAudio (juce::AudioBuffer<float>& buffer)
+{
+    const float gainFactor = 1.f - std::abs(*pan);
+
+    int destBuffer = 0;
+    int sourceBuffer = 1;
+    if (*pan < 0.f)
+    {
+        destBuffer = 1;
+        sourceBuffer = 0;
+    }
+
+    buffer.copyFrom (destBuffer, 0, buffer.getWritePointer (sourceBuffer), buffer.getNumSamples(), gainFactor);
 }
 
 void WavetableSynth::handleMidi (juce::MidiMessage& message)

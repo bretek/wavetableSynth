@@ -100,22 +100,25 @@ void WavetableNote::renderAudio (juce::AudioBuffer<float>& buffer, int startSamp
     {
         if (voices[voiceNum].isPlaying())
         {
-            float panValue = voicePanValues[voiceNum];
-            int affectedChannel = 1;
-            int nonAffectedChannel = 0;
-            if (panValue > 0.f)
+            const float panValue = voicePanValues[voiceNum];
+            const float gainFactor = 1.f - std::abs(panValue);
+
+            int destBuffer = 0;
+            int sourceBuffer = 1;
+            if (panValue < 0.f)
             {
-                affectedChannel = 0;
-                nonAffectedChannel = 1;
+                destBuffer = 1;
+                sourceBuffer = 0;
             }
 
-            auto* channel = buffer.getWritePointer (nonAffectedChannel);
-            auto* channel2 = buffer.getWritePointer (affectedChannel);
+            auto* channel = buffer.getWritePointer (sourceBuffer);
+            auto* pannedChannel = buffer.getWritePointer (destBuffer);
 
             for (int sample = startSample; sample <= endSample; ++sample)
             {
-                channel[sample] += (voices[voiceNum].getNextSample () * voiceAmplitudeValues[voiceNum] * (*level));
-                channel2[sample] += (voices[voiceNum].getNextSample () * voiceAmplitudeValues[voiceNum] * (*level) * (1.f - std::abs(panValue)));
+                const float nextSample = voices[voiceNum].getNextSample () * voiceAmplitudeValues[voiceNum] * (*level);
+                channel[sample] += nextSample;
+                pannedChannel[sample] += nextSample * gainFactor;
             }
         }
     }
